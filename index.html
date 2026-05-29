@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소셜 네트워크 분석 — 교육 & 실습</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f6f3; --surface:#ffffff; --surface2:#f0f0ec; --surface3:#e6e6e0;
+  --border:#e2e2db; --border2:#cfcfc6;
+  --text:#1c1c1a; --text2:#6b6b62; --text3:#9a9a90;
+  --green:#16a06a; --green2:#138a5c; --green-d:rgba(22,160,106,.1); --green-d2:rgba(22,160,106,.2);
+  --purple:#7c5cf0; --purple-d:rgba(124,92,240,.1);
+  --amber:#e08a00; --amber-d:rgba(224,138,0,.12);
+  --red:#e0524f; --red-d:rgba(224,82,79,.1);
+  --blue:#2f7ee0; --blue-d:rgba(47,126,224,.1);
+  --pink:#d8458a; --pink-d:rgba(216,69,138,.1);
+  --teal:#0d9488; --teal-d:rgba(13,148,136,.1);
+  --mono:'DM Mono',monospace; --sans:'Noto Sans KR',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;line-height:1.6;}
+::selection{background:var(--green-d2);}
+
+.topbar{border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;gap:18px;
+  position:sticky;top:0;background:rgba(246,246,243,.94);backdrop-filter:blur(14px);z-index:200;}
+.logo{font-weight:900;font-size:15px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;}
+.logo-mark{width:22px;height:22px;border-radius:5px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;}
+.tabs{display:flex;gap:4px;margin-left:8px;}
+.tab{padding:8px 18px;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;color:var(--text2);
+  background:transparent;border:none;font-family:var(--sans);transition:all .15s;}
+.tab:hover{color:var(--text);background:var(--surface2);}
+.tab.active{color:var(--green);background:var(--green-d);}
+.byline{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.1em;}
+
+.page{display:none;animation:fade .35s ease;}
+.page.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 28px 100px;}
+
+.sec-head{margin-bottom:24px;}
+.sec-kicker{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.14em;text-transform:uppercase;}
+.sec-title{font-size:24px;font-weight:700;letter-spacing:-.03em;margin-top:4px;}
+.sec-desc{font-size:13px;color:var(--text2);margin-top:6px;max-width:640px;}
+
+.intro-hero{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin-bottom:32px;position:relative;overflow:hidden;}
+.intro-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--green-d2),transparent 70%);pointer-events:none;}
+.intro-hero h2{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;}
+.intro-hero p{font-size:13px;color:var(--text2);line-height:1.8;max-width:680px;position:relative;}
+.intro-hero strong{color:var(--green);font-weight:500;}
+.intro-hero .lucky{margin-top:14px;font-size:12px;color:var(--text);background:var(--surface2);border-radius:8px;padding:12px 16px;}
+
+.metric-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
+.mn-btn{padding:7px 14px;font-size:12px;font-weight:500;border-radius:20px;cursor:pointer;background:var(--surface);border:1px solid var(--border);color:var(--text2);transition:all .15s;font-family:var(--sans);}
+.mn-btn:hover{border-color:var(--border2);color:var(--text);}
+.mn-btn.active{background:var(--text);color:var(--surface);border-color:var(--text);font-weight:700;}
+
+.metric-panel{display:none;}
+.metric-panel.active{display:block;animation:fade .3s ease;}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.mc-head{padding:22px 26px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px;}
+.mc-badge{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;}
+.mc-title{font-size:18px;font-weight:700;letter-spacing:-.02em;}
+.mc-en{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.06em;margin-top:2px;}
+.mc-body{padding:24px 26px;}
+.mc-def{font-size:14px;line-height:1.85;color:var(--text);margin-bottom:8px;}
+.mc-def strong{color:var(--green);font-weight:500;}
+.mc-detail{font-size:12.5px;color:var(--text2);line-height:1.85;margin-bottom:18px;}
+.mc-formula{font-family:var(--mono);font-size:13px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--text);display:inline-block;margin-bottom:18px;}
+.mc-viz{background:var(--surface2);border-radius:10px;padding:20px;margin-bottom:8px;}
+.viz-label{font-size:11px;color:var(--text2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.viz-readout{color:var(--green);font-weight:500;white-space:nowrap;}
+.canvas-box{width:100%;}
+canvas{display:block;width:100%;height:auto;}
+.viz-ctrl{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:12px;color:var(--text2);}
+.viz-ctrl input[type=range]{flex:1;accent-color:var(--green);height:3px;}
+.viz-hint{font-size:11px;color:var(--text3);margin-top:10px;line-height:1.6;}
+.example-box{background:var(--surface2);border-radius:8px;padding:14px 18px;margin-top:16px;font-size:12px;color:var(--text2);line-height:1.8;}
+.example-box .ex-tag{display:inline-block;background:var(--green-d);color:var(--green);font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:3px;margin-bottom:6px;}
+
+.tie-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+.tie-col{border-radius:10px;padding:18px 20px;}
+.tie-weak{background:var(--green-d);border:1px solid rgba(22,160,106,.3);}
+.tie-strong{background:var(--purple-d);border:1px solid rgba(124,92,240,.3);}
+.tie-col h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+.tie-weak h4{color:var(--green);} .tie-strong h4{color:var(--purple);}
+.tie-col ul{list-style:none;margin-top:10px;}
+.tie-col li{font-size:12px;color:var(--text2);padding:4px 0 4px 16px;position:relative;line-height:1.6;}
+.tie-col li::before{content:'→';position:absolute;left:0;color:var(--text3);}
+.hansen-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px;}
+.hansen-table th,.hansen-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;}
+.hansen-table th{background:var(--surface2);color:var(--text2);font-weight:500;font-size:11px;}
+.hansen-table td{color:var(--text);}
+.hansen-table .yes{color:var(--green);font-weight:500;} .hansen-table .no{color:var(--red);font-weight:500;}
+
+.step-prog{display:flex;gap:8px;margin-bottom:28px;}
+.sp-item{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s;}
+.sp-item.on{background:var(--green);}
+.guide-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin-bottom:14px;}
+.guide-card h4{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.gc-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.guide-card p{font-size:12px;color:var(--text2);line-height:1.7;}
+.list-input-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-top:18px;}
+.lic-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.lic-title{font-size:14px;font-weight:700;} .lic-count{font-family:var(--mono);font-size:11px;color:var(--text2);}
+.name-pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.np-inp{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-size:13px;font-family:var(--sans);color:var(--text);outline:none;transition:all .2s;}
+.np-inp:focus{border-color:var(--green);background:var(--surface);}
+.np-inp::placeholder{color:var(--text3);}
+.add-more{margin-top:10px;font-size:12px;color:var(--green);cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:none;border:none;font-family:var(--sans);}
+.add-more:hover{text-decoration:underline;}
+
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.btn{padding:10px 22px;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;border:1px solid var(--border2);background:var(--surface);color:var(--text);transition:all .15s;font-family:var(--sans);letter-spacing:-.01em;}
+.btn:hover{background:var(--surface2);border-color:var(--text3);}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green);font-weight:700;}
+.btn-primary:hover{background:var(--green2);border-color:var(--green2);}
+.btn-ghost{color:var(--text2);border-color:transparent;font-size:12px;background:transparent;}
+
+.mode-switch{display:inline-flex;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px;margin-bottom:16px;}
+.ms-btn{padding:7px 16px;font-size:12px;font-weight:500;border-radius:6px;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:var(--sans);transition:all .15s;}
+.ms-btn.active{background:var(--green);color:#fff;font-weight:700;}
+
+.attr-table-wrap{overflow-x:auto;}
+table.attr-table{border-collapse:collapse;font-size:12px;width:100%;}
+.attr-table th,.attr-table td{border:1px solid var(--border);padding:0;}
+.attr-table th{background:var(--surface2);color:var(--text2);font-size:11px;font-weight:500;padding:8px 10px;text-align:center;}
+.attr-table .at-name{text-align:left;padding:0 12px;height:42px;font-weight:500;color:var(--text);min-width:120px;background:var(--surface);}
+.attr-table .at-num{width:34px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3);background:var(--surface);}
+.attr-table .at-cell{text-align:center;height:42px;background:var(--surface);}
+.prox-group{display:inline-flex;gap:3px;}
+.prox-btn{padding:0 10px;height:28px;border:1px solid var(--border);background:var(--surface2);color:var(--text3);font-size:11px;cursor:pointer;border-radius:5px;transition:all .12s;font-family:var(--sans);white-space:nowrap;}
+.prox-btn:hover{border-color:var(--border2);}
+.prox-btn.sel[data-v=VC]{background:var(--green);border-color:var(--green);color:#fff;font-weight:700;}
+.prox-btn.sel[data-v=C]{background:var(--surface3);border-color:var(--text3);color:var(--text);font-weight:700;}
+.prox-btn.sel[data-v=NVC]{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:700;}
+.prox-btn.sel[data-v=D]{background:var(--red);border-color:var(--red);color:#fff;font-weight:700;}
+.at-check{width:16px;height:16px;cursor:pointer;accent-color:var(--green);}
+
+.matrix-wrap{overflow-x:auto;margin-top:8px;}
+table.matrix{border-collapse:collapse;}
+.matrix th,.matrix td{border:1px solid var(--border);}
+.matrix .mh-col{background:var(--surface2);width:40px;height:110px;vertical-align:bottom;padding-bottom:8px;text-align:center;}
+.mh-col span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;color:var(--text2);display:block;max-height:96px;overflow:hidden;}
+.matrix .mh-corner{background:var(--surface2);min-width:120px;height:110px;vertical-align:bottom;padding:0 12px 8px;font-size:11px;color:var(--text3);}
+.matrix .m-num{background:var(--surface);width:34px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3);height:42px;}
+.matrix .m-name{background:var(--surface);padding:0 12px;font-size:12px;font-weight:500;color:var(--text);height:42px;min-width:120px;}
+.matrix .m-gray{background:var(--surface2);width:40px;height:42px;}
+.matrix .m-cell{width:40px;height:42px;text-align:center;vertical-align:middle;cursor:pointer;background:var(--surface);transition:background .1s;font-size:14px;color:transparent;user-select:none;}
+.matrix .m-cell:hover{background:var(--surface3);}
+.matrix .m-cell.on{background:var(--green-d2);color:var(--green);font-weight:700;}
+
+.pair-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.pair-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;cursor:pointer;transition:all .12s;}
+.pair-row:hover{border-color:var(--border2);background:var(--surface2);}
+.pair-row.on{border-color:var(--green);background:var(--green-d);}
+.pair-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:all .12s;}
+.pair-row.on .pair-check{background:var(--green);border-color:var(--green);color:#fff;}
+.pair-names{font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;}
+.pair-vs{color:var(--text3);font-size:11px;}
+.pair-search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;font-family:var(--sans);color:var(--text);outline:none;margin-bottom:12px;}
+.pair-search:focus{border-color:var(--border2);}
+.pair-tip{font-size:12px;color:var(--text2);margin-bottom:8px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.stat-card .sl{font-family:var(--mono);font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.stat-card .sv{font-size:30px;font-weight:700;font-family:var(--mono);letter-spacing:-.02em;}
+.stat-card .sv.accent{color:var(--green);}
+.stat-card .ss{font-size:10px;color:var(--text3);font-family:var(--mono);margin-top:2px;}
+.result-viz{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;}
+.rv-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.rv-sub{font-size:11px;color:var(--text2);margin-bottom:14px;}
+.insight{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12.5px;color:var(--text2);line-height:1.85;margin-bottom:12px;}
+.insight strong{color:var(--text);}
+.insight .tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:3px;margin-right:5px;}
+
+.hidden{display:none!important;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><span class="logo-mark">◈</span>Social Network Analysis</div>
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('edu',this)">📖 네트워크 이론</button>
+    <button class="tab" onclick="showPage('lab',this)">🧪 나의 네트워크 측정</button>
+  </div>
+  <div class="byline">홍운기 교수 · 조직행동</div>
+</div>
+
+<div class="page active" id="page-edu">
+<div class="wrap">
+  <div class="intro-hero">
+    <h2>'운'이 좋은 사람은 누구일까?</h2>
+    <p>운이 좋다는 것은 <strong>확률적으로 자신에게 필요한 지식·정보·힘을 가진 사람과 만나는 것</strong>을 의미합니다. 그 '만남의 확률'은 우연이 아니라, 내가 어떤 <b>네트워크 구조</b> 안에 위치해 있는지에 따라 결정됩니다. 사회적 자본(Social Capital)은 바로 이 관계망이 만들어내는 자원입니다.</p>
+    <div class="lucky">이 페이지에서는 네트워크의 구조적·관계적 특성을 측정하는 <b>7가지 핵심 지표</b>를 직접 조작하며 배웁니다. 각 시각화의 노드와 슬라이더를 만져보세요.</div>
+  </div>
+  <div class="sec-head">
+    <div class="sec-kicker">Network Metrics</div>
+    <div class="sec-title">네트워크 지표 인터랙티브 학습</div>
+    <div class="sec-desc">아래 버튼으로 지표를 선택하고, 각 시각화의 컨트롤을 조작해 보세요.</div>
+  </div>
+  <div class="metric-nav" id="metric-nav"></div>
+  <div id="metric-panels"></div>
+</div>
+</div>
+
+<div class="page" id="page-lab">
+<div class="wrap">
+  <div class="step-prog"><div class="sp-item on" id="sp1"></div><div class="sp-item" id="sp2"></div><div class="sp-item" id="sp3"></div></div>
+
+  <div id="lab-s1">
+    <div class="sec-head">
+      <div class="sec-kicker">Step 01</div>
+      <div class="sec-title">내 네트워크 사람들 적기</div>
+      <div class="sec-desc">아래 세 가지 관점을 모두 떠올린 뒤, 떠오르는 사람들을 <b>한 리스트에 한 번씩만</b> 적으세요. (중복 자동 제거)</div>
+    </div>
+    <div class="guide-card"><h4><span class="gc-icon" style="background:var(--purple-d)">💼</span>진로 · 전문성 조언자</h4><p>내 경력, 학업, 자기개발 방향에 대해 고민을 나눈 사람. (직무 전환, 경력 방향, 조직 내 입지 등)</p></div>
+    <div class="guide-card"><h4><span class="gc-icon" style="background:var(--green-d)">🔗</span>업무 · 커리어 조력자</h4><p>업무 조언, 유용한 정보나 기회를 알려준 사람. (프로젝트 팁, 이직 기회, 업계 정보, 연결고리 등)</p></div>
+    <div class="guide-card"><h4><span class="gc-icon" style="background:var(--amber-d)">❤️</span>정서적 지지자 · 친구</h4><p>편하게 고민을 털어놨던 사람. (일·가족·삶의 방향 등 사적이고 인간적인 이야기를 나눈 사람)</p></div>
+    <div class="list-input-card">
+      <div class="lic-head"><span class="lic-title">통합 네트워크 리스트</span><span class="lic-count" id="name-count">0명</span></div>
+      <div class="name-pool" id="name-pool"></div>
+      <button class="add-more" onclick="addInputs(4)">＋ 칸 더 추가</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="buildStep2()">다음: 친밀도 표시 →</button>
+      <button class="btn btn-ghost" onclick="loadDemo()">예시 데이터로 보기</button>
+    </div>
+  </div>
+
+  <div id="lab-s2" class="hidden">
+    <div class="sec-head"><div class="sec-kicker">Step 02–03</div><div class="sec-title">친밀도 · 동료 특성 표시</div>
+      <div class="sec-desc">각 사람과 얼마나 가까운지, 다른 팀인지, 나보다 높은 직급인지 표시하세요.</div></div>
+    <div class="attr-table-wrap"><table class="attr-table" id="attr-table"></table></div>
+
+    <div class="sec-head" style="margin-top:36px"><div class="sec-kicker">Step 04</div><div class="sec-title">서로 아는 사이 체크</div>
+      <div class="sec-desc">내가 적은 사람들끼리 서로 아는지 표시하세요. 두 가지 방식 중 편한 것을 고르세요.</div></div>
+    <div class="mode-switch">
+      <button class="ms-btn active" id="mode-pair" onclick="setMode('pair')">📋 페어 리스트 (쉬움)</button>
+      <button class="ms-btn" id="mode-cell" onclick="setMode('cell')">▦ 매트릭스 그리드</button>
+    </div>
+    <div id="pair-mode">
+      <div class="pair-tip">아래 각 쌍이 <b>서로 아는 사이</b>라면 카드를 클릭하세요. 검색으로 특정 사람을 필터링할 수 있습니다.</div>
+      <input class="pair-search" id="pair-search" placeholder="이름으로 필터링… (예: 김민준)" oninput="filterPairs(this.value)">
+      <div class="pair-list" id="pair-list"></div>
+    </div>
+    <div id="cell-mode" class="hidden">
+      <div class="pair-tip">셀을 클릭해 체크하세요. 큰 셀이라 클릭이 편합니다.</div>
+      <div class="matrix-wrap"><table class="matrix" id="matrix-table"></table></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="calc()">📊 네트워크 계산하기</button>
+      <button class="btn btn-ghost" onclick="backTo1()">← 이름 다시 입력</button>
+    </div>
+  </div>
+
+  <div id="lab-s3" class="hidden">
+    <div class="sec-head"><div class="sec-kicker">Step 05</div><div class="sec-title">내 네트워크 분석 결과</div></div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="sl">인원 N</div><div class="sv" id="r-n">—</div><div class="ss">총 명수</div></div>
+      <div class="stat-card"><div class="sl">최대밀도 M</div><div class="sv" id="r-m">—</div><div class="ss">N(N-1)/2</div></div>
+      <div class="stat-card"><div class="sl">연결 C</div><div class="sv" id="r-c">—</div><div class="ss">아는 쌍</div></div>
+      <div class="stat-card"><div class="sl">밀도 D</div><div class="sv accent" id="r-d">—</div><div class="ss">C / M</div></div>
+      <div class="stat-card"><div class="sl">매우 가까움</div><div class="sv" id="r-vc">—</div><div class="ss">명</div></div>
+      <div class="stat-card"><div class="sl">다른 부서</div><div class="sv" id="r-dt">—</div><div class="ss">명</div></div>
+      <div class="stat-card"><div class="sl">높은 직급</div><div class="sv" id="r-hs">—</div><div class="ss">명</div></div>
+    </div>
+    <div class="result-viz">
+      <div class="rv-title">내 네트워크 그래프</div>
+      <div class="rv-sub">노드 = 사람 · 선 = 서로 아는 관계 · 색 = 친밀도 · 크기 = 연결 수</div>
+      <div class="canvas-box"><canvas id="result-canvas"></canvas></div>
+    </div>
+    <div class="insight" id="ins-main"></div>
+    <div class="insight" id="ins-sub"></div>
+    <div class="btn-row"><button class="btn btn-ghost" onclick="backTo2()">← 그리드 수정</button></div>
+  </div>
+</div>
+</div>
+
+<script>
+function showPage(p,btn){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0});
+  if(p==='edu') requestAnimationFrame(initEduViz);
+}
+
+const METRICS=[
+  {id:'degree',name:'연결 정도'},
+  {id:'between',name:'매개 중심성'},
+  {id:'closeness',name:'근접 중심성'},
+  {id:'cluster',name:'클러스터링 계수'},
+  {id:'density',name:'네트워크 밀도'},
+  {id:'hole',name:'구조적 공백'},
+  {id:'tie',name:'유대 강도'},
+];
+const navEl=document.getElementById('metric-nav');
+METRICS.forEach((m,i)=>{const b=document.createElement('button');b.className='mn-btn'+(i===0?' active':'');b.textContent=m.name;b.onclick=()=>selectMetric(m.id,b);navEl.appendChild(b);});
+function selectMetric(id,btn){
+  document.querySelectorAll('.mn-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('.metric-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('mp-'+id).classList.add('active');
+  requestAnimationFrame(initEduViz);
+}
+
+document.getElementById('metric-panels').innerHTML=`
+<div class="metric-panel active" id="mp-degree">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--blue-d)">🔵</div>
+    <div><div class="mc-title">연결 정도</div><div class="mc-en">Network Degree · Local Measure</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">개인이 <strong>직접 연결된 사람의 수</strong>를 세는 가장 기본적인 지표입니다.</div>
+      <div class="mc-detail">내가 바로 아는 사람이 몇 명인지를 측정합니다. 값이 10이면 나는 10명과 직접 연결되어 있습니다. 단순하지만 "인맥의 양"을 보여주는 직관적인 지표입니다.</div>
+      <div class="mc-formula">degree(v) = 노드 v에 연결된 엣지의 개수</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>바깥 노드를 클릭해 연결 토글</span><span class="viz-readout" id="deg-read">degree = 4</span></div>
+        <div class="canvas-box"><canvas id="cv-degree" data-h="280"></canvas></div>
+        <div class="viz-hint">바깥 노드를 클릭하면 중심 노드(나)와의 연결이 추가/제거됩니다.</div>
+      </div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-between">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--amber-d)">🌉</div>
+    <div><div class="mc-title">매개 중심성</div><div class="mc-en">Betweenness Centrality · Bridge</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">서로 모르는 두 사람을 연결하는 <strong>'다리(bridge)' 역할</strong>의 정도입니다.</div>
+      <div class="mc-detail">전체 네트워크에서 임의의 두 사람을 잇는 최단 경로 중, 나를 거쳐 가는 비율을 모두 합한 값입니다. 값이 높을수록 정보·자원이 흐르는 핵심 통로이며, 내가 빠지면 단절되는 관계가 많아집니다. 조직의 '브로커' 또는 '게이트키퍼'입니다. <b>전역(global) 지표</b>로, 네트워크 전체를 알아야 계산됩니다.</div>
+      <div class="mc-formula">betweenness(v) = Σ (v를 지나는 최단경로 / 전체 최단경로)</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>노드를 클릭하면 매개 중심성 값 표시</span><span class="viz-readout" id="bet-read">노드를 선택하세요</span></div>
+        <div class="canvas-box"><canvas id="cv-between" data-h="320"></canvas></div>
+        <div class="viz-hint">노드를 클릭하면 그 사람이 지나는 최단 경로들이 강조되고, 매개 중심성 값이 표시됩니다. 두 그룹을 잇는 다리 노드의 값이 가장 큽니다.</div>
+      </div>
+      <div class="example-box"><span class="ex-tag">조직 예시</span>두 부서를 잇는 유일한 연결점인 직원이 퇴사하면, 두 부서 간 정보 교류가 완전히 끊길 수 있습니다. 이 직원의 매개 중심성이 가장 높습니다.</div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-closeness">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--green-d)">⚡</div>
+    <div><div class="mc-title">근접 중심성</div><div class="mc-en">Closeness Centrality · Reach Speed</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">네트워크 내 <strong>모든 사람에게 얼마나 빨리 도달</strong>할 수 있는지를 나타냅니다.</div>
+      <div class="mc-detail">정보를 전달할 때 그룹 내 모든 사람에게 전파되는 속도입니다. 다른 모든 노드까지의 최단 경로 거리 합이 작을수록 근접 중심성이 높습니다.</div>
+      <div class="mc-formula">closeness(v) = (N−1) / Σ 최단거리(v, 모든 노드)</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>노드를 클릭해 전파 단계 확인</span><span class="viz-readout" id="clo-read">노드를 선택하세요</span></div>
+        <div class="canvas-box"><canvas id="cv-closeness" data-h="280"></canvas></div>
+        <div class="viz-hint">색이 진할수록 가깝고(1단계), 옅을수록 멀리(2~3단계) 떨어져 있습니다.</div>
+      </div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-cluster">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--pink-d)">🔗</div>
+    <div><div class="mc-title">클러스터링 계수</div><div class="mc-en">Clustering Coefficient · Closure</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">내 지인들끼리 <strong>서로 얼마나 잘 아는지</strong>를 나타내는 값(0~1)입니다.</div>
+      <div class="mc-detail">나(파란 노드)는 옆에 두고, 나와 연결된 이웃들끼리의 연결만 봅니다. 이웃이 4명이면 이웃 간 가능한 연결은 6쌍입니다. 이 중 실제로 몇 쌍이 연결되어 있는지가 계수입니다. 모두 연결되면 c=1, 절반이면 c=0.5, 하나도 없으면 c=0. 값이 높을수록 촘촘한 소집단(클리크)이라 신뢰가 높지만 외부 정보 유입은 제한됩니다.</div>
+      <div class="mc-formula">CC = 이웃들 간 실제 연결 수 / 가능한 모든 연결 수 [n(n−1)/2]</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>이웃들 사이 점선을 클릭해 연결/해제</span><span class="viz-readout" id="clu-read">CC = 0.33</span></div>
+        <div class="canvas-box"><canvas id="cv-cluster" data-h="300"></canvas></div>
+        <div class="viz-hint">왼쪽 파란 노드가 '나'입니다. 오른쪽 이웃 4명 사이의 점선을 클릭해 연결해 보세요. 이웃끼리 많이 연결될수록 계수가 1에 가까워집니다.</div>
+      </div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-density">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--purple-d)">▦</div>
+    <div><div class="mc-title">네트워크 밀도</div><div class="mc-en">Network Density · Team-level</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">전체 네트워크가 <strong>얼마나 촘촘하게 연결</strong>되어 있는지를 0~1로 표현합니다.</div>
+      <div class="mc-detail">가능한 모든 연결 중 실제로 연결된 비율입니다. 밀도가 높으면 신뢰·협력이 강하지만 새 정보가 적고, 낮으면 다양한 정보에 접근하기 좋지만 응집력이 약합니다.</div>
+      <div class="mc-formula">density = 실제 엣지 수 / [N(N−1)/2]</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>슬라이더로 밀도 조절</span><span class="viz-readout" id="den-read">density = 0.30</span></div>
+        <div class="canvas-box"><canvas id="cv-density" data-h="300"></canvas></div>
+        <div class="viz-ctrl"><span>희소</span><input type="range" id="den-slider" min="0" max="100" value="30" oninput="drawDensity(+this.value)"><span>촘촘</span></div>
+        <div class="viz-hint">슬라이더를 오른쪽으로 옮길수록 더 많은 연결이 추가됩니다.</div>
+      </div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-hole">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--teal-d)">🕳️</div>
+    <div><div class="mc-title">구조적 공백</div><div class="mc-en">Structural Hole · Burt 1992</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">내 이웃들이 <strong>서로 얼마나 안 겹치는지</strong>를 봅니다. 서로 모르는 이웃들 사이의 '빈틈(공백)'을 메우는 사람이 정보·기회·통제력의 이점을 얻습니다.</div>
+      <div class="mc-detail">Burt(1992)는 두 사람 사이에 직접 연결이 없는 빈 자리를 <b>구조적 공백</b>이라 불렀습니다. 내 이웃 A와 B가 서로 모른다면, 나는 A·B 사이의 공백을 잇는 유일한 다리이고 양쪽의 서로 다른 정보를 독점적으로 받습니다. 반대로 A·B가 서로 알면 그들의 정보는 <b>중복(redundant)</b>되고, 나를 거치지 않아도 연결되므로 내 중개 가치는 사라집니다.</div>
+      <div class="mc-detail" style="margin-bottom:10px">대표 측정값은 두 가지입니다.<br>
+        <b>① 유효 규모(Effective size)</b> = n − 2t/n<br>
+        내 이웃 n명 중 '중복을 걷어낸 실질 인맥 수'. 이웃끼리 연결(t)이 많을수록 작아집니다.<br>
+        <b>② 효율성(Efficiency)</b> = 유효 규모 / n<br>
+        인맥 1명당 평균 이점. 1에 가까울수록 군더더기 없이 모두 비중복 정보원입니다.</div>
+      <div class="mc-formula">유효 규모 = n − 2t/n  ·  효율성 = (n − 2t/n) / n<br>n = 이웃 수, t = 이웃들 사이의 실제 연결 수</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>이웃들 사이 선을 클릭해 연결을 추가/제거</span><span class="viz-readout" id="hole-read">효율성 = 1.00</span></div>
+        <div class="canvas-box"><canvas id="cv-hole" data-h="300"></canvas></div>
+        <div class="viz-hint">왼쪽 노드가 '나'입니다. 이웃 4명이 서로 모르면(연결 0개) 효율성 1.0 — 4명 모두 독립된 정보원. 이웃끼리 연결할수록 정보가 중복되어 유효 규모·효율성이 함께 떨어집니다. 빨간 점선이 아직 비어 있는 '구조적 공백'입니다.</div>
+      </div>
+
+      <div class="mc-def" style="margin-top:24px">또 다른 핵심 지표 — <strong>네트워크 제약(Network Constraint)</strong></div>
+      <div class="mc-detail">Burt는 구조적 공백을 누리지 <b>못하는</b> 정도를 <b>제약(constraint)</b>으로 측정했습니다. 내 인맥들이 자기들끼리 똘똘 뭉쳐 있을수록(클리크) 나는 그 집단에 '갇혀' 새로운 정보·기회로 빠져나가기 어렵습니다 — 제약이 높습니다. 반대로 서로 모르는 여러 집단에 두루 걸쳐 있으면 제약이 낮고, 그만큼 자유롭게 중개·교섭할 수 있습니다.</div>
+      <div class="mc-formula">제약 cᵢ = Σⱼ ( pᵢⱼ + Σ_q pᵢ_q · p_qⱼ )²<br>pᵢⱼ = i가 j에 투자한 관계 비중 · q = i,j 모두와 연결된 제3자</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>서로 다른 그룹(주황)을 잇는 빨간 선을 클릭해 연결/해제</span><span class="viz-readout" id="con-read">제약 = 낮음</span></div>
+        <div class="canvas-box"><canvas id="cv-constraint" data-h="380"></canvas></div>
+        <div class="viz-hint">파란 '나'는 서로 분리된 4개 그룹에 연결되어 <b>구조적 공백을 가로지르는</b> 위치입니다(제약 최저). 두 그룹을 잇는 점선을 클릭해 연결하면 — 그 두 그룹이 더 이상 독립된 정보원이 아니게 되어(공백이 메워짐) <b>나의 제약이 올라가고 유효 규모가 줄어듭니다</b>. 모든 그룹이 서로 연결되면 나는 더 이상 중개자가 아닙니다. 클릭하는 빨간 선이 바로 '메워진 공백'입니다.</div>
+      </div>
+      <div class="example-box"><span class="ex-tag">3가지 지표 정리</span>
+        <b>유효 규모</b> = 중복 걷어낸 실질 인맥 수 (클수록 좋음) · <b>효율성</b> = 인맥당 이점 (1에 가까울수록 좋음) · <b>제약</b> = 공백을 못 누리는 정도 (낮을수록 좋음). 셋 다 "내 이웃들이 서로 얼마나 안 겹치는가"라는 같은 직관을 다른 방식으로 잰 것입니다.</div>
+
+      <div class="example-box"><span class="ex-tag">매개 중심성과 차이</span><b>매개 중심성</b>은 <u>전체 네트워크</u>에서 내가 최단 경로 위에 얼마나 자주 놓이는지(전역·global)를 보고, <b>구조적 공백</b>은 <u>내 직접 이웃들</u>이 서로 얼마나 안 겹치는지(지역·local)만 봅니다. 둘 다 '중개자'를 재지만 — 매개 중심성은 멀리 떨어진 사람까지의 경로가 필요하고, 구조적 공백은 내 1촌 인맥만 보면 계산됩니다. 또 <b>클러스터링 계수와는 정반대</b>입니다: CC가 높으면(이웃끼리 다 앎) 구조적 공백은 사라집니다.</div>
+    </div></div>
+</div>
+<div class="metric-panel" id="mp-tie">
+  <div class="metric-card"><div class="mc-head"><div class="mc-badge" style="background:var(--red-d)">💪</div>
+    <div><div class="mc-title">유대 강도</div><div class="mc-en">Tie Strength · Granovetter 1973</div></div></div>
+    <div class="mc-body">
+      <div class="mc-def">관계의 강도는 <strong>함께한 시간·정서적 강도·친밀감·호혜성</strong>의 조합입니다.</div>
+      <div class="mc-detail">Granovetter(1973)는 지인 소개로 취업한 사람들을 조사해, 정보의 대부분이 <b>자주 만나지 않는 약한 유대</b>로부터 왔음을 발견했습니다 — "사람들은 존재조차 잊고 있던 이들로부터 중요한 정보를 받는다."</div>
+      <div class="mc-viz">
+        <div class="viz-label"><span>취업 정보의 출처 (Granovetter 1973)</span></div>
+        <div class="canvas-box"><canvas id="cv-tie" data-h="220"></canvas></div>
+        <div class="viz-hint">약한 유대(중간 빈도 + 연 1회 이하)가 전체 취업 정보의 약 83%를 차지했습니다.</div>
+      </div>
+      <div class="tie-grid">
+        <div class="tie-col tie-weak"><h4>약한 유대 (Weak Tie)</h4><ul><li>다른 사회 그룹에 연결 → 새 정보·기회</li><li>이질적 팀 → 다양한 관점·아이디어</li><li>명시적·코드화 지식 탐색에 유리</li></ul></div>
+        <div class="tie-col tie-strong"><h4>강한 유대 (Strong Tie)</h4><ul><li>높은 신뢰·응집력 → 깊은 협력</li><li>동질적 팀 → 원활한 지식 공유</li><li>암묵적·복잡한 지식 전달에 유리</li></ul></div>
+      </div>
+      <div class="example-box" style="margin-top:18px"><span class="ex-tag">Hansen 1999</span>지식의 성격에 따라 효과적인 유대가 다릅니다.
+        <table class="hansen-table">
+          <tr><th>지식 유형 \\ 유대</th><th>강한 유대</th><th>약한 유대</th></tr>
+          <tr><td>명시적·코드화 지식</td><td>탐색 효과 <span class="no">낮음</span></td><td>탐색 효과 <span class="yes">높음</span></td></tr>
+          <tr><td>암묵적·의존적 지식</td><td>전달 문제 <span class="yes">적음</span></td><td>전달 문제 <span class="no">심각</span></td></tr>
+        </table>
+      </div>
+    </div></div>
+</div>`;
+
+const DPR=window.devicePixelRatio||1;
+function setupCanvas(cv){
+  const cssW=cv.clientWidth||820;
+  const cssH=+cv.dataset.h||280;
+  cv.width=Math.round(cssW*DPR);
+  cv.height=Math.round(cssH*DPR);
+  cv.style.height=cssH+'px';
+  const c=cv.getContext('2d');
+  c.setTransform(DPR,0,0,DPR,0,0);
+  return{c,w:cssW,h:cssH};
+}
+function nodeDot(c,x,y,r,fill,stroke,label,lc){
+  c.beginPath();c.arc(x,y,r,0,7);c.fillStyle=fill;c.fill();c.lineWidth=2;c.strokeStyle=stroke;c.stroke();
+  if(label){c.fillStyle=lc||'#fff';c.font='12px DM Mono';c.textAlign='center';c.textBaseline='middle';c.fillText(label,x,y);}
+}
+function edgeLine(c,a,b,col,w,al){c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.strokeStyle=col;c.lineWidth=w||1.5;c.globalAlpha=al==null?.55:al;c.stroke();c.globalAlpha=1;}
+// blue -> yellow -> red ramp by normalized t in [0,1]
+function rampColor(t){
+  t=Math.max(0,Math.min(1,t));
+  let r,g,b;
+  if(t<0.5){const u=t/0.5;r=Math.round(74+(245-74)*u);g=Math.round(144+(190-144)*u);b=Math.round(226+(70-226)*u);} // blue->yellow
+  else{const u=(t-0.5)/0.5;r=Math.round(245-(245-198)*u);g=Math.round(190-(190-50)*u);b=Math.round(70-(70-50)*u);} // yellow->red
+  return `rgb(${r},${g},${b})`;
+}
+// draw a solid value-node with the metric value labelled beside it (reference-image style)
+function valueNode(c,x,y,val,maxVal,sel,labelPos){
+  const t=maxVal>0?val/maxVal:0;
+  const col=rampColor(t);
+  const r=sel?20:16;
+  c.beginPath();c.arc(x,y,r,0,7);c.fillStyle=col;c.fill();
+  if(sel){c.lineWidth=3;c.strokeStyle='#1c1c1a';c.stroke();}
+  // value label beside node
+  const txt=(Math.round(val*10)/10).toString();
+  c.fillStyle='#4a4a44';c.font='600 13px DM Mono';c.textBaseline='middle';
+  const off=r+8;
+  if(labelPos==='left'){c.textAlign='right';c.fillText(txt,x-off,y);}
+  else if(labelPos==='top'){c.textAlign='center';c.fillText(txt,x,y-off-4);}
+  else if(labelPos==='bottom'){c.textAlign='center';c.fillText(txt,x,y+off+6);}
+  else{c.textAlign='left';c.fillText(txt,x+off,y);}
+}
+
+let degState=[true,true,true,true,false,false];
+let betSel=-1;
+let cloSel=-1;
+let cluLinks={'0-1':false,'1-2':false,'2-3':false,'0-3':false,'0-2':true,'1-3':true};
+let holeLinks={'0-1':false,'1-2':false,'2-3':false,'0-2':false,'0-3':false,'1-3':false};
+let conGroupLinks={'0-1':false,'0-2':false,'0-3':false,'1-2':false,'1-3':false,'2-3':false}; // links between the 4 groups (via their reps)
+let denVal=30;
+
+function drawDegree(){
+  const cv=document.getElementById('cv-degree');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  const cx=w/2,cy=h/2,R=Math.min(w,h)/2-46;const ns=[];
+  for(let i=0;i<6;i++){const a=-Math.PI/2+i*Math.PI/3;ns.push({x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R,on:degState[i]});}
+  ns.forEach(n=>{if(n.on)edgeLine(c,{x:cx,y:cy},n,'#2f7ee0',2,.5);});
+  ns.forEach((n,i)=>nodeDot(c,n.x,n.y,18,n.on?'rgba(47,126,224,.15)':'#f0f0ec',n.on?'#2f7ee0':'#cfcfc6',String.fromCharCode(65+i),n.on?'#2f7ee0':'#9a9a90'));
+  nodeDot(c,cx,cy,24,'rgba(22,160,106,.18)','#16a06a','나','#16a06a');
+  document.getElementById('deg-read').textContent='degree = '+degState.filter(Boolean).length;
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=(e.clientX-r.left),my=(e.clientY-r.top);
+    ns.forEach((n,i)=>{if(Math.hypot(mx-n.x,my-n.y)<20){degState[i]=!degState[i];drawDegree();}});};
+}
+function drawBetween(){
+  const cv=document.getElementById('cv-between');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  // Network laid out like the reference image (organic, two central hubs)
+  const P=[
+    {x:w*0.14,y:h*0.30,lp:'left'},   // 0  top-left leaf
+    {x:w*0.52,y:h*0.16,lp:'right'},  // 1  top hub
+    {x:w*0.40,y:h*0.45,lp:'left'},   // 2  yellow hub (mid-left)
+    {x:w*0.62,y:h*0.58,lp:'right'},  // 3  red hub (mid-right) - broker
+    {x:w*0.18,y:h*0.72,lp:'left'},   // 4  lower-left leaf
+    {x:w*0.52,y:h*0.88,lp:'bottom'}, // 5  bottom leaf
+    {x:w*0.84,y:h*0.80,lp:'right'},  // 6  lower-right leaf
+  ];
+  const N=P.length;
+  const E=[[0,1],[0,2],[1,2],[1,3],[2,3],[2,4],[3,5],[3,6]];
+  const adj=Array.from({length:N},()=>[]);
+  E.forEach(([a,b])=>{adj[a].push(b);adj[b].push(a);});
+  function betweenness(){
+    const bc=new Array(N).fill(0);
+    for(let s=0;s<N;s++){
+      const dist=new Array(N).fill(-1),sigma=new Array(N).fill(0),preds=Array.from({length:N},()=>[]);
+      dist[s]=0;sigma[s]=1;const q=[s];const order=[];
+      while(q.length){const u=q.shift();order.push(u);adj[u].forEach(v=>{
+        if(dist[v]<0){dist[v]=dist[u]+1;q.push(v);}
+        if(dist[v]===dist[u]+1){sigma[v]+=sigma[u];preds[v].push(u);}});}
+      const delta=new Array(N).fill(0);
+      for(let i=order.length-1;i>=0;i--){const w2=order[i];
+        preds[w2].forEach(v=>{delta[v]+=(sigma[v]/sigma[w2])*(1+delta[w2]);});
+        if(w2!==s)bc[w2]+=delta[w2];}
+    }
+    return bc.map(v=>v/2);
+  }
+  const bc=betweenness();const maxBc=Math.max(...bc,1);
+  E.forEach(([a,b])=>{const hot=betSel>=0&&(a===betSel||b===betSel);edgeLine(c,P[a],P[b],hot?'#6b6b62':'#cfcfc6',hot?2:1.5,hot?.8:.6);});
+  P.forEach((p,i)=>valueNode(c,p.x,p.y,bc[i],maxBc,i===betSel,p.lp));
+  if(betSel>=0)document.getElementById('bet-read').textContent=String.fromCharCode(65+betSel)+'의 매개 중심성 = '+bc[betSel].toFixed(1);
+  else document.getElementById('bet-read').textContent='색이 진할수록 높은 값 · 노드 클릭';
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+    P.forEach((p,i)=>{if(Math.hypot(mx-p.x,my-p.y)<20){betSel=(betSel===i?-1:i);drawBetween();}});};
+}
+let cloNodes=[],cloAdj=[];
+function drawCloseness(){
+  const cv=document.getElementById('cv-closeness');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  // same organic network as betweenness, with closeness values beside nodes
+  cloNodes=[
+    {x:w*0.14,y:h*0.30,lp:'left'},
+    {x:w*0.52,y:h*0.16,lp:'top'},
+    {x:w*0.40,y:h*0.45,lp:'left'},
+    {x:w*0.62,y:h*0.58,lp:'right'},
+    {x:w*0.18,y:h*0.72,lp:'left'},
+    {x:w*0.52,y:h*0.88,lp:'bottom'},
+    {x:w*0.84,y:h*0.80,lp:'right'},
+  ];
+  cloAdj=[[1,2],[0,2,3],[0,1,3,4],[1,2,5,6],[2],[3],[3]];
+  const N=cloNodes.length;
+  // closeness for every node
+  function bfs(s){const d=new Array(N).fill(-1);d[s]=0;const q=[s];while(q.length){const u=q.shift();cloAdj[u].forEach(v=>{if(d[v]<0){d[v]=d[u]+1;q.push(v);}});}return d;}
+  const clo=cloNodes.map((_,i)=>{const d=bfs(i);const s=d.reduce((a,v)=>a+(v>0?v:0),0);return s?(N-1)/s:0;});
+  const maxClo=Math.max(...clo,0.01);
+  // edges; if a node selected, highlight its shortest-path steps with distance numbers
+  let dist=null;
+  if(cloSel>=0)dist=bfs(cloSel);
+  cloAdj.forEach((nb,i)=>nb.forEach(j=>{if(i<j){const hot=cloSel>=0&&(i===cloSel||j===cloSel);edgeLine(c,cloNodes[i],cloNodes[j],hot?'#6b6b62':'#cfcfc6',hot?2:1.5,hot?.8:.6);}}));
+  cloNodes.forEach((n,i)=>{
+    if(cloSel>=0){
+      // distance-step view: color by step, label = distance
+      const d=dist[i];const t=d===0?1:d===1?0.6:d===2?0.3:0.1;
+      const col=d===0?'#e0524f':rampColor(t);
+      const r=i===cloSel?20:16;
+      c.beginPath();c.arc(n.x,n.y,r,0,7);c.fillStyle=col;c.fill();
+      if(i===cloSel){c.lineWidth=3;c.strokeStyle='#1c1c1a';c.stroke();}
+      c.fillStyle='#4a4a44';c.font='600 13px DM Mono';c.textBaseline='middle';
+      const off=r+8;if(n.lp==='left'){c.textAlign='right';c.fillText(String(d),n.x-off,n.y);}else if(n.lp==='top'){c.textAlign='center';c.fillText(String(d),n.x,n.y-off-4);}else if(n.lp==='bottom'){c.textAlign='center';c.fillText(String(d),n.x,n.y+off+6);}else{c.textAlign='left';c.fillText(String(d),n.x+off,n.y);}
+    } else {
+      valueNode(c,n.x,n.y,clo[i],maxClo,false,n.lp);
+    }
+  });
+  if(cloSel>=0)document.getElementById('clo-read').textContent=String.fromCharCode(65+cloSel)+': 근접 중심성 '+clo[cloSel].toFixed(2)+' (숫자=거리)';
+  else document.getElementById('clo-read').textContent='색이 진할수록 높은 값 · 노드 클릭 시 거리';
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+    cloNodes.forEach((n,i)=>{if(Math.hypot(mx-n.x,my-n.y)<20){cloSel=(cloSel===i?-1:i);drawCloseness();}});};
+}
+function drawCluster(){
+  const cv=document.getElementById('cv-cluster');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  // ego (나) on the LEFT, neighbors arranged on the RIGHT
+  const me={x:w*0.18,y:h*0.5};
+  const cxN=w*0.62,cyN=h*0.5,R=Math.min(w*0.46,h)/2-30;
+  const nb=[];
+  for(let i=0;i<4;i++){const a=-Math.PI/2+i*Math.PI/2;nb.push({x:cxN+Math.cos(a)*R,y:cyN+Math.sin(a)*R});}
+  // edges me<->neighbors (thin gray, like the reference image)
+  nb.forEach(n=>edgeLine(c,me,n,'#9a9a90',1.5,.4));
+  // neighbor-neighbor pairs
+  const pairs=[[0,1],[1,2],[2,3],[0,3],[0,2],[1,3]];
+  pairs.forEach(([i,j])=>{const on=cluLinks[i+'-'+j];
+    c.beginPath();c.moveTo(nb[i].x,nb[i].y);c.lineTo(nb[j].x,nb[j].y);
+    if(on){c.strokeStyle='#1c1c1a';c.lineWidth=2.5;c.globalAlpha=.85;}
+    else{c.strokeStyle='#e0524f';c.lineWidth=1.5;c.globalAlpha=.7;c.setLineDash([5,5]);}
+    c.stroke();c.setLineDash([]);c.globalAlpha=1;});
+  // neighbor nodes (white with outline, like reference)
+  nb.forEach((n,i)=>nodeDot(c,n.x,n.y,18,'#ffffff','#9a9a90',String.fromCharCode(65+i),'#6b6b62'));
+  // me node (solid blue, like reference)
+  nodeDot(c,me.x,me.y,22,'#2849e0','#2849e0','나','#ffffff');
+  const cnt=Object.values(cluLinks).filter(Boolean).length;
+  const cc=cnt/6;
+  document.getElementById('clu-read').textContent='CC = '+cnt+'/6 = '+cc.toFixed(2);
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+    if(Math.hypot(mx-me.x,my-me.y)<26)return;
+    let best=-1,bestD=12;
+    pairs.forEach(([i,j],k)=>{const d=segDist(mx,my,nb[i],nb[j]);if(d<bestD){bestD=d;best=k;}});
+    if(best>=0){const[i,j]=pairs[best];cluLinks[i+'-'+j]=!cluLinks[i+'-'+j];drawCluster();}};
+}
+function drawDensity(val){
+  if(val!=null)denVal=val;
+  const cv=document.getElementById('cv-density');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  const N=8,cx=w/2,cy=h/2,R=Math.min(w,h)/2-44;const ns=[];
+  for(let i=0;i<N;i++){const a=-Math.PI/2+i*2*Math.PI/N;ns.push({x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R});}
+  const allPairs=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)allPairs.push([i,j]);
+  const show=Math.round(allPairs.length*denVal/100);
+  for(let k=0;k<show;k++){const[i,j]=allPairs[k];edgeLine(c,ns[i],ns[j],'#7c5cf0',1.5,.4);}
+  ns.forEach(n=>nodeDot(c,n.x,n.y,14,'rgba(124,92,240,.15)','#7c5cf0'));
+  document.getElementById('den-read').textContent='density = '+(show/allPairs.length).toFixed(2);
+}
+function drawHole(){
+  const cv=document.getElementById('cv-hole');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  // same ego-on-left layout as cluster for visual consistency
+  const me={x:w*0.18,y:h*0.5};
+  const cxN=w*0.62,cyN=h*0.5,R=Math.min(w*0.46,h)/2-30;
+  const nb=[];
+  for(let i=0;i<4;i++){const a=-Math.PI/2+i*Math.PI/2;nb.push({x:cxN+Math.cos(a)*R,y:cyN+Math.sin(a)*R});}
+  nb.forEach(n=>edgeLine(c,me,n,'#16a06a',2,.55));
+  const pairs=[[0,1],[1,2],[2,3],[0,3],[0,2],[1,3]];
+  pairs.forEach(([i,j])=>{const on=holeLinks[i+'-'+j];
+    c.beginPath();c.moveTo(nb[i].x,nb[i].y);c.lineTo(nb[j].x,nb[j].y);
+    if(on){c.strokeStyle='#0d9488';c.lineWidth=2.5;c.globalAlpha=.8;}
+    else{c.strokeStyle='#e0524f';c.lineWidth=1.5;c.globalAlpha=.55;c.setLineDash([6,6]);}
+    c.stroke();c.setLineDash([]);c.globalAlpha=1;});
+  nb.forEach((n,i)=>nodeDot(c,n.x,n.y,18,'rgba(13,148,136,.15)','#0d9488',String.fromCharCode(65+i),'#0a6b62'));
+  nodeDot(c,me.x,me.y,22,'rgba(22,160,106,.2)','#16a06a','나','#0d7a52');
+  // Burt: n neighbors, t ties among them. effective size = n - 2t/n ; efficiency = effSize/n
+  const n=4;
+  const t=Object.values(holeLinks).filter(Boolean).length;
+  const effSize=n-2*t/n;
+  const eff=effSize/n;
+  document.getElementById('hole-read').textContent='유효규모 '+effSize.toFixed(2)+' · 효율성 '+eff.toFixed(2)+' (t='+t+')';
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+    // ignore clicks on the ego ('나') node — it's a fixed reference point
+    if(Math.hypot(mx-me.x,my-me.y)<26)return;
+    // find the closest toggleable neighbor-pair line using true segment distance
+    let best=-1,bestD=12; // must be within 12px of the line
+    pairs.forEach(([i,j],k)=>{const d=segDist(mx,my,nb[i],nb[j]);if(d<bestD){bestD=d;best=k;}});
+    if(best>=0){const[i,j]=pairs[best];holeLinks[i+'-'+j]=!holeLinks[i+'-'+j];drawHole();}};
+  drawConstraint();
+}
+// distance from point (px,py) to segment a-b
+function segDist(px,py,a,b){
+  const dx=b.x-a.x,dy=b.y-a.y;const L2=dx*dx+dy*dy;
+  let t=L2?((px-a.x)*dx+(py-a.y)*dy)/L2:0;t=Math.max(0,Math.min(1,t));
+  const cx=a.x+t*dx,cy=a.y+t*dy;return Math.hypot(px-cx,py-cy);
+}
+function drawConstraint(){
+  const cv=document.getElementById('cv-constraint');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  // ego center, 4 groups around. Each group has a representative (ego's direct contact) + 2 followers.
+  const ego={x:w*0.5,y:h*0.5};
+  const gpos=[{x:w*0.20,y:h*0.22},{x:w*0.80,y:h*0.22},{x:w*0.20,y:h*0.78},{x:w*0.80,y:h*0.78}];
+  // rep = first member (closest to ego); followers cluster behind it
+  const reps=[], groups=[];
+  gpos.forEach((g,gi)=>{
+    const toEgo=Math.atan2(ego.y-g.y,ego.x-g.x);
+    const rep={x:g.x+Math.cos(toEgo)*30,y:g.y+Math.sin(toEgo)*30};
+    const f1={x:g.x+Math.cos(toEgo+2.3)*30,y:g.y+Math.sin(toEgo+2.3)*30};
+    const f2={x:g.x+Math.cos(toEgo-2.3)*30,y:g.y+Math.sin(toEgo-2.3)*30};
+    reps.push(rep);groups.push([rep,f1,f2]);
+  });
+  const col=['#e8821e','#e8821e','#e8821e','#e8821e'];
+  // intra-group ties (rep to its 2 followers) — fixed, show each group is a small cluster
+  groups.forEach((mem)=>{edgeLine(c,mem[0],mem[1],'#222',1.6,.7);edgeLine(c,mem[0],mem[2],'#222',1.6,.7);edgeLine(c,mem[1],mem[2],'#222',1.6,.5);});
+  // inter-group links between reps (the toggleable ones — filling structural holes)
+  const pairs=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+  pairs.forEach(([i,j])=>{const on=conGroupLinks[i+'-'+j];
+    c.beginPath();c.moveTo(reps[i].x,reps[i].y);c.lineTo(reps[j].x,reps[j].y);
+    if(on){c.strokeStyle='#e0524f';c.lineWidth=3;c.globalAlpha=.85;}
+    else{c.strokeStyle='#cfcfc6';c.lineWidth=1.2;c.globalAlpha=.4;c.setLineDash([5,5]);}
+    c.stroke();c.setLineDash([]);c.globalAlpha=1;});
+  // ego -> each rep (blue spanning ties)
+  reps.forEach(r=>edgeLine(c,ego,r,'#3a4fd0',2.5,.85));
+  // draw group member nodes
+  groups.forEach((mem,gi)=>mem.forEach((n,k)=>nodeDot(c,n.x,n.y,k===0?15:11,col[gi],col[gi],'','')));
+  nodeDot(c,ego.x,ego.y,20,'#2849e0','#2849e0','나','#fff');
+
+  // Burt constraint on ego over its 4 reps.
+  // ego invests equally: p_ej = 1/4. A rep j's contacts = ego + its 2 followers + inter-group links to other reps.
+  const n=4;
+  const linkCount=[0,0,0,0];
+  pairs.forEach(([i,j])=>{if(conGroupLinks[i+'-'+j]){linkCount[i]++;linkCount[j]++;}});
+  // p_qj: from rep q, proportion of ties to rep j. rep q ties = 1(ego)+2(followers)+linkCount[q].
+  function pqj(q,j){if(!conGroupLinks[[q,j].sort((a,b)=>a-b).join('-')])return 0;const tq=1+2+linkCount[q];return 1/tq;}
+  let total=0;
+  for(let j=0;j<n;j++){
+    let indirect=0;
+    for(let q=0;q<n;q++){if(q===j)continue;indirect+=(1/n)*pqj(q,j);}
+    total+=Math.pow(1/n+indirect,2);
+  }
+  // effective size of ego too (redundancy via inter-group links)
+  const t=Object.values(conGroupLinks).filter(Boolean).length;
+  const effSize=n-2*t/n;
+  let label;
+  if(t===0)label='최저 (4개 공백 모두 가로지름)';
+  else if(t<=2)label='낮음';
+  else if(t<=4)label='중간';
+  else label='높음 (그룹들이 서로 연결됨)';
+  document.getElementById('con-read').textContent='제약 '+total.toFixed(2)+' · 유효규모 '+effSize.toFixed(2)+' · '+label;
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+    if(Math.hypot(mx-ego.x,my-ego.y)<24)return;
+    let best=-1,bestD=14;
+    pairs.forEach(([i,j],k)=>{const d=segDist(mx,my,reps[i],reps[j]);if(d<bestD){bestD=d;best=k;}});
+    if(best>=0){const[i,j]=pairs[best];conGroupLinks[i+'-'+j]=!conGroupLinks[i+'-'+j];drawConstraint();}};
+}
+function drawTie(){
+  const cv=document.getElementById('cv-tie');if(!cv||!cv.offsetParent)return;const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  const data=[{l:'매우 가까운 관계 (주 2회+)',v:16.7,col:'#7c5cf0'},{l:'중간 관계 (월~연 단위)',v:55.6,col:'#16a06a'},{l:'약한 관계 (연 1회 이하)',v:27.8,col:'#16a06a'}];
+  const labelW=Math.min(220,w*0.32);const x0=labelW;const bw=w-labelW-70;let y=24;const bh=40,gap=18;
+  data.forEach(d=>{
+    c.fillStyle='#6b6b62';c.font='12px Noto Sans KR';c.textAlign='right';c.textBaseline='middle';c.fillText(d.l,x0-14,y+bh/2);
+    c.fillStyle='#e6e6e0';c.fillRect(x0,y,bw,bh);
+    c.fillStyle=d.col;c.globalAlpha=.85;c.fillRect(x0,y,bw*d.v/100,bh);c.globalAlpha=1;
+    c.fillStyle='#1c1c1a';c.font='500 13px DM Mono';c.textAlign='left';c.fillText(d.v+'%',x0+bw*d.v/100+8,y+bh/2);
+    y+=bh+gap;});
+}
+
+function initEduViz(){
+  const active=document.querySelector('.metric-panel.active');if(!active)return;
+  const id=active.id.replace('mp-','');
+  ({degree:drawDegree,between:drawBetween,closeness:drawCloseness,cluster:drawCluster,density:()=>drawDensity(null),hole:()=>{drawHole();drawConstraint();},tie:drawTie}[id]||(()=>{}))();
+}
+window.addEventListener('load',()=>requestAnimationFrame(initEduViz));
+let rzT;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(initEduViz,150);});
+
+const PROX_LABEL={VC:'매우 가까움',C:'가까움',NVC:'별로',D:'먼'};
+function addInputs(n){const pool=document.getElementById('name-pool');for(let i=0;i<n;i++){const inp=document.createElement('input');inp.className='np-inp';inp.placeholder='이름';inp.addEventListener('input',updateCount);pool.appendChild(inp);}updateCount();}
+addInputs(12);
+function updateCount(){const vals=[...document.querySelectorAll('.np-inp')].map(i=>i.value.trim()).filter(Boolean);document.getElementById('name-count').textContent=new Set(vals).size+'명';}
+function loadDemo(){const d=['김민준','이서연','박지호','최수아','정태양','한나래','윤도현','임지수'];const inps=document.querySelectorAll('.np-inp');d.forEach((n,i)=>{if(inps[i])inps[i].value=n;});updateCount();buildStep2();}
+
+let names=[],proximity=[],diffTeam=[],higherStatus=[],checks=[],checkMode='pair';
+function buildStep2(){
+  const seen=new Set();names=[];
+  document.querySelectorAll('.np-inp').forEach(i=>{const v=i.value.trim();if(v&&!seen.has(v)){seen.add(v);names.push(v);}});
+  if(names.length<2){alert('최소 2명 이상 입력해주세요.');return;}
+  if(names.length>24)names=names.slice(0,24);
+  const N=names.length;proximity=new Array(N).fill('C');diffTeam=new Array(N).fill(false);higherStatus=new Array(N).fill(false);
+  checks=Array.from({length:N},()=>new Array(N).fill(false));
+  renderAttr();renderPairs();renderMatrix();
+  document.getElementById('lab-s1').classList.add('hidden');document.getElementById('lab-s2').classList.remove('hidden');document.getElementById('lab-s3').classList.add('hidden');
+  document.getElementById('sp2').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderAttr(){
+  const N=names.length;let h='<thead><tr><th class="at-num"></th><th style="text-align:left;padding-left:12px">이름</th><th>친밀도</th><th>다른 팀</th><th>높은 직급</th></tr></thead><tbody>';
+  for(let i=0;i<N;i++){
+    h+=`<tr><td class="at-num">${i+1}</td><td class="at-name">${names[i]}</td><td class="at-cell"><div class="prox-group">`;
+    ['VC','C','NVC','D'].forEach(v=>{h+=`<button class="prox-btn${proximity[i]===v?' sel':''}" data-v="${v}" onclick="setProx(${i},'${v}',this)">${PROX_LABEL[v]}</button>`;});
+    h+=`</div></td><td class="at-cell"><input type="checkbox" class="at-check" ${diffTeam[i]?'checked':''} onchange="diffTeam[${i}]=this.checked"></td><td class="at-cell"><input type="checkbox" class="at-check" ${higherStatus[i]?'checked':''} onchange="higherStatus[${i}]=this.checked"></td></tr>`;
+  }
+  h+='</tbody>';document.getElementById('attr-table').innerHTML=h;
+}
+function setProx(i,v,btn){proximity[i]=v;btn.parentNode.querySelectorAll('.prox-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function renderPairs(){
+  const N=names.length;let h='';
+  for(let i=0;i<N;i++)for(let j=0;j<i;j++){const on=checks[i][j];
+    h+=`<div class="pair-row${on?' on':''}" data-i="${i}" data-j="${j}" data-names="${names[i]} ${names[j]}" onclick="togglePair(${i},${j},this)"><div class="pair-check">✓</div><div class="pair-names"><b>${names[i]}</b><span class="pair-vs">↔</span><b>${names[j]}</b></div></div>`;}
+  document.getElementById('pair-list').innerHTML=h;
+}
+function togglePair(i,j,el){checks[i][j]=!checks[i][j];checks[j][i]=checks[i][j];el.classList.toggle('on',checks[i][j]);syncMatrixCell(i,j);}
+function filterPairs(q){q=q.trim().toLowerCase();document.querySelectorAll('.pair-row').forEach(r=>{r.style.display=(!q||r.dataset.names.toLowerCase().includes(q))?'flex':'none';});}
+function renderMatrix(){
+  const N=names.length;let h='<thead><tr><th class="m-num"></th><th class="mh-corner">이름</th>';
+  for(let j=0;j<N;j++)h+=`<th class="mh-col"><span>${names[j]}</span></th>`;
+  h+='</tr></thead><tbody>';
+  for(let i=0;i<N;i++){h+=`<tr><td class="m-num">${i+1}</td><td class="m-name">${names[i]}</td>`;
+    for(let j=0;j<N;j++){if(j<i){const on=checks[i][j];h+=`<td class="m-cell${on?' on':''}" id="mc-${i}-${j}" onclick="toggleCell(${i},${j},this)">${on?'✓':''}</td>`;}else h+=`<td class="m-gray"></td>`;}
+    h+='</tr>';}
+  h+='</tbody>';document.getElementById('matrix-table').innerHTML=h;
+}
+function toggleCell(i,j,el){checks[i][j]=!checks[i][j];checks[j][i]=checks[i][j];el.classList.toggle('on',checks[i][j]);el.textContent=checks[i][j]?'✓':'';const pr=document.querySelector(`.pair-row[data-i="${i}"][data-j="${j}"]`);if(pr)pr.classList.toggle('on',checks[i][j]);}
+function syncMatrixCell(i,j){const el=document.getElementById('mc-'+i+'-'+j);if(el){el.classList.toggle('on',checks[i][j]);el.textContent=checks[i][j]?'✓':'';}}
+function setMode(m){checkMode=m;document.getElementById('mode-pair').classList.toggle('active',m==='pair');document.getElementById('mode-cell').classList.toggle('active',m==='cell');document.getElementById('pair-mode').classList.toggle('hidden',m!=='pair');document.getElementById('cell-mode').classList.toggle('hidden',m!=='cell');}
+function backTo1(){document.getElementById('lab-s2').classList.add('hidden');document.getElementById('lab-s1').classList.remove('hidden');document.getElementById('sp2').classList.remove('on');window.scrollTo({top:0,behavior:'smooth'});}
+function backTo2(){document.getElementById('lab-s3').classList.add('hidden');document.getElementById('lab-s2').classList.remove('hidden');document.getElementById('sp3').classList.remove('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+function calc(){
+  const N=names.length,M=N*(N-1)/2;let C=0;
+  for(let i=0;i<N;i++)for(let j=0;j<i;j++)if(checks[i][j])C++;
+  const D=M>0?C/M:0;
+  const vc=proximity.filter(p=>p==='VC').length,dt=diffTeam.filter(Boolean).length,hs=higherStatus.filter(Boolean).length;
+  document.getElementById('r-n').textContent=N;document.getElementById('r-m').textContent=M;document.getElementById('r-c').textContent=C;
+  document.getElementById('r-d').textContent=D.toFixed(2);document.getElementById('r-vc').textContent=vc;document.getElementById('r-dt').textContent=dt;document.getElementById('r-hs').textContent=hs;
+  let ins='';
+  if(D>=0.7)ins=`<span class="tag" style="background:var(--green-d);color:var(--green)">HIGH DENSITY</span> 밀도 <strong>${D.toFixed(2)}</strong> — 구성원들이 서로 잘 아는 <strong>촘촘한 네트워크</strong>입니다. 신뢰·협력이 강하지만 외부 정보 유입이 제한되고 <em>구조적 공백</em>이 적습니다. 약한 유대를 늘려 새 정보 채널을 확보해 보세요.`;
+  else if(D>=0.4)ins=`<span class="tag" style="background:var(--green-d);color:var(--green)">BALANCED</span> 밀도 <strong>${D.toFixed(2)}</strong> — 강한 유대와 약한 유대가 적절히 혼재한 <strong>균형 잡힌 네트워크</strong>입니다. 신뢰 기반 협력과 새 정보 획득이 모두 가능한 이상적 구조에 가깝습니다.`;
+  else ins=`<span class="tag" style="background:var(--green-d);color:var(--green)">LOW DENSITY</span> 밀도 <strong>${D.toFixed(2)}</strong> — <strong>느슨하고 다양한 네트워크</strong>입니다. 서로 다른 그룹에 연결되어 <em>구조적 공백</em>을 메우는 브로커 위치일 가능성이 높아 새 정보·기회에 유리하지만, 깊은 신뢰 관계는 부족할 수 있습니다.`;
+  document.getElementById('ins-main').innerHTML=ins;
+  let sub='';
+  if(hs>N*0.3)sub+=`<span class="tag" style="background:var(--purple-d);color:var(--purple)">VERTICAL CAPITAL</span> 높은 직급 연결이 <strong>${hs}명(${Math.round(hs/N*100)}%)</strong> — <strong>수직적 사회적 자본</strong>이 풍부합니다.<br>`;
+  if(dt>N*0.4)sub+=`<span class="tag" style="background:var(--amber-d);color:var(--amber)">BRIDGE</span> 다른 부서 연결이 <strong>${dt}명(${Math.round(dt/N*100)}%)</strong> — <strong>조직 간 브리지</strong> 역할을 합니다. 매개 중심성이 높을 가능성이 큽니다.<br>`;
+  if(vc>0)sub+=`<span class="tag" style="background:var(--green-d);color:var(--green)">STRONG TIES</span> 매우 가까운 관계 <strong>${vc}명</strong> — 암묵적 지식 전달의 핵심 강한 유대입니다.`;
+  if(!sub)sub=`<span class="tag" style="background:var(--purple-d);color:var(--purple)">TIP</span> 친밀도·다른 부서·높은 직급을 표시하면 더 상세한 분석이 제공됩니다.`;
+  document.getElementById('ins-sub').innerHTML=sub;
+  document.getElementById('lab-s2').classList.add('hidden');document.getElementById('lab-s3').classList.remove('hidden');document.getElementById('sp3').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  requestAnimationFrame(drawResultGraph);
+}
+function drawResultGraph(){
+  const cv=document.getElementById('result-canvas');cv.dataset.h=Math.max(320,names.length*16);
+  const{c,w,h}=setupCanvas(cv);c.clearRect(0,0,w,h);
+  const N=names.length,cx=w/2,cy=h/2,R=Math.min(w,h)/2-54;
+  const pos=names.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/N;return{x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R};});
+  for(let i=0;i<N;i++)for(let j=0;j<i;j++)if(checks[i][j])edgeLine(c,pos[i],pos[j],'#16a06a',1.5,.4);
+  const colMap={VC:'#16a06a',C:'#9a9a90',NVC:'#e08a00',D:'#e0524f'};
+  pos.forEach((p,i)=>{const deg=checks[i].filter(Boolean).length;const r=12+deg*2.5;const col=colMap[proximity[i]]||'#9a9a90';
+    c.beginPath();c.arc(p.x,p.y,r,0,7);c.fillStyle=col+'2e';c.fill();c.lineWidth=2;c.strokeStyle=col;c.stroke();
+    c.fillStyle='#1c1c1a';c.font='11px Noto Sans KR';c.textAlign='center';c.textBaseline='middle';c.fillText(names[i].length>4?names[i].slice(0,4):names[i],p.x,p.y);});
+}
+</script>
+</body>
+</html>
