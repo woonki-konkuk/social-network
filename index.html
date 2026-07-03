@@ -5,26 +5,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>소셜 네트워크 분석 · 건국대학교 홍운기 교수</title>
-  <!-- 본문: Gowun Dodum / 제목: Gowun Batang(세리프). 오프라인이면 시스템 폰트로 대체됩니다. -->
+  <!-- 본문: Pretendard(고딕) / 제목: Gowun Batang(명조). 오프라인이면 시스템 폰트로 대체됩니다. -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendard-dynamic-subset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* ===== 면(surface) — 따뜻한 크림 베이스 ===== */
-      --bg: #f8f4ee;
-      --bg-soft: #f0e9de;
-      --card: #ffffff;
-      --card-soft: #faf7f2;
+      /* ===== 면(surface) — 크림 (ver2) ===== */
+      --bg: #f7f5ef;
+      --bg-soft: #f0ede4;
+      --card: #fbfaf5;
+      --card-soft: #f4f1e9;
 
-      /* ===== 글자 ===== */
-      --ink: #1b1d19;
-      --ink2: #585d54;
-      --ink3: #8b9086;
+      /* ===== 글자 — 진한 잉크 차콜 (ver2) ===== */
+      --ink: #181712;
+      --ink2: #6b675e;
+      --ink3: #9c978b;
+      --ink4: #b4afa3;
 
-      /* ===== 선 ===== */
-      --line: #e8e4da;
-      --line2: #d8d3c6;
+      /* ===== 선 — 거의 투명한 잉크 (ver2) ===== */
+      --line: rgba(31,30,27,.10);
+      --line2: rgba(31,30,27,.18);
 
       /* ===== 건국대 브랜드 색 ===== */
       --green: #005426;
@@ -50,8 +54,8 @@
       --sh: 0 2px 4px rgba(16,24,40,.04), 0 8px 20px rgba(16,24,40,.06);
       --sh-lg: 0 14px 40px rgba(16,24,40,.14);
 
-      /* ===== 폰트 ===== */
-      --sans: 'Gowun Dodum', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      /* ===== 폰트 — 본문: Pretendard(고딕) / 제목: Gowun Batang(명조) / 수식·수치: DM Mono ===== */
+      --sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       --serif: 'Gowun Batang', Georgia, 'Apple SD Gothic Neo', serif;
       --mono: 'DM Mono', monospace;
     }
@@ -59,38 +63,51 @@
     html { scroll-behavior: smooth }
     body {
       margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans);
-      line-height: 1.7; font-size: 19px; overflow-x: hidden;
+      line-height: 1.5; font-size: 26px; overflow-x: hidden;
       -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+      /* 내용 드래그·복사 가벼운 차단 (수업 자료 보호). 풀려면 이 3줄 삭제 */
+      -webkit-user-select: none; -moz-user-select: none; user-select: none;
     }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 28px }
+    input, textarea, select { -webkit-user-select: text; user-select: text }  /* 랩 입력칸은 선택·타이핑 허용 */
+    .wrap { max-width: 1360px; margin: 0 auto; padding: 0 52px }
     #bar { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--accent); z-index: 50; transition: width .1s }
     ::selection { background: var(--green-soft) }
 
     /* ===== hero ===== */
-    header { padding: 84px 0 50px; text-align: center; position: relative }
+    header { padding: 96px 0 56px; text-align: center; position: relative }
     .kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px }
-    header h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(34px, 6.5vw, 56px); line-height: 1.12; margin: 0 0 .35em; letter-spacing: -.01em; color: var(--ink) }
+    header h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(50px, 8.5vw, 92px); line-height: 1.08; margin: 0 0 .35em; letter-spacing: -.015em; color: var(--ink) }
     header h1 em { font-style: normal; color: var(--accent) }
-    .sub { color: var(--ink2); font-size: 19px; max-width: 580px; margin: 0 auto; line-height: 1.6 }
+    .sub { color: var(--ink2); font-size: 30px; max-width: 700px; margin: 0 auto; line-height: 1.5 }
     .byline { font-size: 13.5px; color: var(--ink3); margin-top: 18px; letter-spacing: .01em }
     .hero-line { width: 48px; height: 3px; background: var(--gold); border-radius: 2px; margin: 26px auto 0 }
-    .scrollcue { margin-top: 28px; color: var(--ink3); font-size: 14px; letter-spacing: .04em; animation: bob 1.8s ease-in-out infinite }
+    .scrollcue { margin-top: 30px; color: var(--ink3); font-size: 14px; letter-spacing: .04em; animation: bob 1.8s ease-in-out infinite }
     @keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(7px) } }
 
-    /* ===== 섹션/타이포 ===== */
+    /* ===== 섹션/타이포 (발표용 대형 폰트) ===== */
     section { padding: 34px 0 }
     .part-no { font-size: 12.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--ink3) }
     .part-label { font-size: 14.5px; font-weight: 600; color: var(--accent); margin-left: 10px }
-    h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(27px, 5vw, 38px); line-height: 1.2; margin: .25em 0 .45em; letter-spacing: -.01em; color: var(--ink) }
-    h3 { font-family: var(--serif); font-weight: 700; font-size: 22px; margin: 1.6em 0 .35em }
+    h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(44px, 7vw, 70px); line-height: 1.14; margin: .25em 0 .45em; letter-spacing: -.015em; color: var(--ink) }
+    h3 { font-family: var(--serif); font-weight: 700; font-size: 40px; line-height: 1.2; margin: 1.4em 0 .5em; letter-spacing: -.01em }
+    h4 { font-family: var(--serif); font-weight: 700; font-size: 28px; margin: 1.3em 0 .25em }
     p { margin: .75em 0 }
-    .lead { font-size: 19px; color: var(--ink2); line-height: 1.65 }
+    .lead { font-size: 34px; color: var(--ink2); line-height: 1.5 }
     b, strong { font-weight: 700; color: inherit }
     a { color: var(--accent-ink); text-underline-offset: 2px }
     .hl { background: linear-gradient(transparent 58%, var(--hl) 58%); padding: 0 1px }
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease }
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease }
     .reveal.in { opacity: 1; transform: none }
-    .rule { border: 0; border-top: 1px solid var(--line); margin: 50px 0 }
+    /* 프레젠터/키보드로 넘길 때 도착 슬라이드 '한 장 넘기듯' 등장 */
+    @keyframes pptArrive { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: none } }
+    .ppt-arrive { animation: pptArrive .42s cubic-bezier(.2,.7,.3,1) both }
+    @media (prefers-reduced-motion: reduce) { .ppt-arrive { animation: none } }
+
+    /* ===== PPT 슬라이드 — 각 .slide(히어로·소세션·푸터)가 한 화면(100vh) ===== */
+    .slide { min-height: 100vh; box-sizing: border-box; padding: 56px 0; display: flex; flex-direction: column; justify-content: safe center; scroll-margin-top: 0 }
+    .slide > .wrap { width: 100% }
+    .subsec.slide { display: block; padding-top: 96px; border-top: 1px solid var(--line2) }   /* 소세션(내용 슬라이드)은 제목이 상단부터 */
+    .rule { display: none }   /* 슬라이드 경계선이 구분 → 가로줄 숨김 */
 
     /* ===== 카드 / 콜아웃 ===== */
     .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 24px 26px; margin: 22px 0; box-shadow: var(--sh-sm); position: relative }
@@ -144,22 +161,24 @@
     .copyright p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--ink) }
     .note { font-size: 13px; color: var(--ink3) }
 
-    /* ===== 사이드바 ===== */
-    #sidenav { position: fixed; left: 0; top: 0; width: 250px; height: 100vh; overflow-y: auto; background: var(--bg-soft); border-right: 1px solid var(--line); padding: 24px 0 40px; z-index: 40; display: flex; flex-direction: column; gap: 1px }
-    .nav-brand { display: flex; align-items: center; gap: 10px; padding: 0 22px 16px; margin-bottom: 8px; border-bottom: 1px solid var(--line) }
+    /* ===== 사이드바 (ver2 — 좌측 강조선 없음, 배경 강조만) ===== */
+    #sidenav { position: fixed; left: 0; top: 0; width: 240px; height: 100vh; overflow-y: auto; background: var(--bg-soft); border-right: 1px solid var(--line); padding: 26px 0 40px; z-index: 40; display: flex; flex-direction: column; gap: 2px }
+    .nav-brand { display: flex; align-items: center; gap: 10px; padding: 0 22px 16px; margin-bottom: 10px; border-bottom: 1px solid var(--line) }
     .nav-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0 }
     .nav-brand .nb-t { font-family: var(--serif); font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink) }
     .nav-brand .nb-s { font-size: 10.5px; color: var(--ink3); letter-spacing: .04em }
-    .nav-link { display: block; padding: 10px 22px; font-size: 14px; color: var(--ink2); text-decoration: none; line-height: 1.35; border-left: 3px solid transparent; transition: .15s }
+    .nav-link { display: block; margin: 0 10px; padding: 9px 14px; font-size: 13.5px; color: var(--ink2); text-decoration: none; line-height: 1.4; border-radius: var(--r-sm); transition: .15s }
     .nav-link span { display: block; font-size: 11px; color: var(--ink3); margin-top: 2px; font-family: var(--mono); letter-spacing: .02em }
     .nav-link:hover { color: var(--ink); background: rgba(0,84,38,.05) }
-    .nav-link.active { border-left-color: var(--accent); color: var(--accent-ink); font-weight: 700; background: rgba(0,84,38,.07) }
+    .nav-link.active { color: var(--accent-ink); font-weight: 700; background: rgba(0,84,38,.09) }
     .nav-link.active span { color: var(--accent) }
-    .nav-sep { margin: 10px 22px 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3) }
-    .nav-link.lab { margin-top: 4px; color: var(--green-deep); font-weight: 700 }
-    #main-content { margin-left: 250px }
+    .nav-sep { margin: 14px 24px 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3) }
+    .nav-link.lab { color: var(--green-deep); font-weight: 700 }
+    #main-content { margin-left: 240px; transition: margin-left .2s }
+    body.toc-hidden #sidenav { display: none }
+    body.toc-hidden #main-content { margin-left: 0 }
     @media(max-width:860px) { #sidenav { display: none } #main-content { margin-left: 0 } }
-    @media(min-width: 1800px) { #sidenav { width: 270px } #main-content { margin-left: 270px } }
+    @media(min-width: 1800px) { #sidenav { width: 260px } #main-content { margin-left: 260px } body.toc-hidden #main-content { margin-left: 0 } }
 
     /* ===================================================================
        LAB — 나의 네트워크 측정
@@ -262,12 +281,88 @@
     .hidden { display: none !important }
 
     @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+
+    /* ===== PPT 컨트롤 (슬라이드 카운터 · 화살표 · 목차 토글) ===== */
+    #slide-counter { position: fixed; right: 16px; bottom: 14px; z-index: 45; background: var(--card); border: 1px solid var(--line); border-radius: var(--pill); padding: 6px 15px; font-size: 14px; font-weight: 700; color: var(--ink2); box-shadow: var(--sh-sm); user-select: none }
+    #ppt-controls { position: fixed; left: 16px; bottom: 14px; z-index: 45; display: flex; gap: 8px; align-items: center }
+    .nav-arrow { width: 42px; height: 42px; padding: 0; display: flex; align-items: center; justify-content: center; background: var(--card); border: 1px solid var(--line); border-radius: 50%; font-size: 34px; line-height: 1; color: var(--ink2); cursor: pointer; box-shadow: var(--sh-sm); transition: .15s }
+    .nav-arrow:hover { border-color: var(--accent); color: var(--accent-ink); background: var(--green-soft) }
+    .nav-arrow:active { transform: scale(.92) }
+    #toc-toggle { background: var(--card); border: 1px solid var(--line); border-radius: var(--pill); padding: 8px 16px; font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--ink2); cursor: pointer; box-shadow: var(--sh-sm) }
+    #toc-toggle:hover { border-color: var(--accent); color: var(--accent-ink) }
+
+    /* viz-card: 캔버스가 흰 배경을 가정해 노드 뒤 선을 가림 → 순백 유지 */
+    .viz-card { background: #fff }
+
+    /* ===== 지표 슬라이드 2단: 네트워크 그래프(좌) + 설명 텍스트박스(우) ===== */
+    .msplit { display: grid; grid-template-columns: 1.15fr .85fr; gap: 34px; align-items: center; margin: 16px 0 }
+    .msplit > * { min-width: 0 }
+    .msplit .viz-card { margin: 0 }
+    .mtext { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 28px 32px; box-shadow: var(--sh-sm) }
+    .mtext > :first-child { margin-top: 0 }
+    .mtext > :last-child { margin-bottom: 0 }
+    .mtext .lead { font-size: 28px; line-height: 1.45; margin: 0 0 .55em }
+    .mtext p { font-size: 22px }
+    .mtext .formula { font-size: 16px; margin-bottom: 0 }
+    .mtext .callout { font-size: 21px }
+    @media(max-width: 1100px) { .msplit { grid-template-columns: 1fr; align-items: stretch } }
+    /* 확장 컴포넌트의 '읽는 글씨'는 본문급으로 (ver2) — 라벨·출처·힌트만 작게 */
+    table.t { font-size: 19px }
+    .tie-col h4 { font-size: 22px }
+    .tie-col li { font-size: 18px }
+    .formula { font-size: 17px }
+    .insight { font-size: 19px }
+    .guide-card h4 { font-size: 22px }
+    .guide-card p { font-size: 18px }
+
+    /* ===== 실습(Lab) 정렬·가독성 정비 (ver2) ===== */
+    #lab-s1 > p, #lab-s2 > p { font-size: 21px; color: var(--ink2); line-height: 1.5 }
+    .lic-title { font-size: 21px }
+    .np-inp { font-size: 19px; padding: 13px 16px }
+    .name-pool { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 11px }
+    .add-more { font-size: 17px }
+    .privacy-note { font-size: 15px }
+    .mode-switch { margin-bottom: 18px }
+    .ms-btn { font-size: 15.5px; padding: 10px 20px }
+    .pair-tip { font-size: 17px }
+    .pair-search { font-size: 18px; padding: 13px 18px }
+    .pair-names { font-size: 19px }
+    .pair-check { width: 28px; height: 28px }
+    /* 친밀도·특성 표 — 열을 콘텐츠에 맞춰 촘촘히 + 가운데 정렬 (우측에 뜬 체크박스 해결) */
+    .attr-table-wrap { width: fit-content; max-width: 100%; margin: 10px auto 0 }
+    table.attr-table { width: auto; font-size: 17px }
+    .attr-table th { font-size: 16px; padding: 14px 16px; color: var(--ink2) }
+    .attr-table .at-num { width: 46px; font-size: 14px }
+    .attr-table .at-name { font-size: 19px; height: 62px; font-weight: 600; padding: 0 20px }
+    .attr-table .at-cell { height: 62px; padding: 0 18px }
+    .prox-group { gap: 6px }
+    .prox-btn { height: 40px; padding: 0 16px; font-size: 15px }
+    .at-check { width: 24px; height: 24px }
+    /* 결과 통계 카드 */
+    .stat-card .sl { font-size: 13.5px }
+    .stat-card .sv { font-size: 36px }
+    .stat-card .ss { font-size: 12px }
+
+    /* ===== 인쇄 — 슬라이드 100vh 해제하고 연속 흐름 ===== */
+    @media print {
+      html { scroll-behavior: auto }
+      .slide { min-height: 0; display: block; padding: 18px 0; border-top: none }
+      #slide-counter, #ppt-controls, #bar, #sidenav { display: none }
+      #main-content { margin-left: 0 }
+    }
   </style>
 </head>
 
-<body>
+<body class="toc-hidden">
 
   <div id="bar"></div>
+  <!-- PPT 컨트롤: 목차 토글 + 이전/다음 화살표 (기본 목차 숨김) -->
+  <div id="ppt-controls">
+    <button id="toc-toggle" onclick="toggleToc()">☰ 목차</button>
+    <button class="nav-arrow" onclick="pptStep(-1)" aria-label="이전 슬라이드" title="이전 (← · PageUp · 포인터)">‹</button>
+    <button class="nav-arrow" onclick="pptStep(1)" aria-label="다음 슬라이드" title="다음 (→ · PageDown · 포인터)">›</button>
+  </div>
+  <div id="slide-counter">1 / 1</div>
 
   <!-- ===== 사이드바 ===== -->
   <nav id="sidenav">
@@ -278,26 +373,22 @@
         <div class="nb-s">Social Network Analysis</div>
       </div>
     </div>
-    <a href="#intro" class="nav-link">개요 <span>운과 네트워크</span></a>
-    <div class="nav-sep">7가지 핵심 지표</div>
+    <div class="nav-sep">6가지 핵심 지표</div>
     <a href="#m-degree" class="nav-link">01 연결 정도 <span>Degree</span></a>
     <a href="#m-between" class="nav-link">02 매개 중심성 <span>Betweenness</span></a>
     <a href="#m-closeness" class="nav-link">03 근접 중심성 <span>Closeness</span></a>
     <a href="#m-cluster" class="nav-link">04 클러스터링 계수 <span>Clustering</span></a>
     <a href="#m-density" class="nav-link">05 네트워크 밀도 <span>Density</span></a>
     <a href="#m-hole" class="nav-link">06 구조적 공백 <span>Structural Hole</span></a>
-    <a href="#m-tie" class="nav-link">07 유대 강도 <span>Tie Strength</span></a>
     <div class="nav-sep">실습</div>
-    <a href="#lab" class="nav-link lab">🧪 나의 네트워크 측정 <span>My Network Lab</span></a>
+    <a href="#lab" class="nav-link lab">나의 네트워크 측정 <span>My Network Lab</span></a>
   </nav>
 
   <div id="main-content">
 
-    <header>
+    <header class="slide">
       <div class="wrap">
-        <span class="kicker">Social Network Analysis</span>
-        <h1>관계망이 만드는 <em>'운'</em></h1>
-        <p class="sub">네트워크의 구조를 측정하는 7가지 지표를 직접 조작하고, 내 인맥으로 계산해 봅니다.</p>
+        <h1>Social <em>Network</em> Analysis</h1>
         <p class="byline">건국대학교 경영학과 홍운기 교수 · 조직행동</p>
         <div class="hero-line"></div>
         <div class="scrollcue">아래로 스크롤 ↓</div>
@@ -306,161 +397,125 @@
 
     <div class="wrap">
 
-      <!-- ===== 개요 ===== -->
-      <section id="intro" class="reveal">
-        <span class="part-no">Intro</span><span class="part-label">운과 네트워크</span>
-        <h2>'운'이 좋은 사람은 누구일까?</h2>
-        <p class="lead">운이 좋다는 것은 <span class="hl">확률적으로 자신에게 필요한 지식·정보·힘을 가진 사람과 만나는 것</span>을 의미합니다. 그 '만남의 확률'은 우연이 아니라, 내가 어떤 <b>네트워크 구조</b> 안에 위치해 있는지에 따라 결정됩니다.</p>
-        <p>사회적 자본(Social Capital)은 바로 이 관계망이 만들어내는 자원입니다.</p>
-        <div class="callout green">왼쪽 메뉴에서 <b>7가지 핵심 지표</b>를 차례로 살펴봅니다. 각 시각화의 노드·점선·슬라이더를 직접 만져보고, 마지막 <b>🧪 나의 네트워크 측정</b>에서 내 인맥으로 같은 지표를 계산해 보세요.</div>
-      </section>
-
-      <hr class="rule">
-
       <!-- ===== 01 연결 정도 ===== -->
-      <section id="m-degree" class="reveal">
+      <section id="m-degree" class="subsec slide reveal">
         <span class="part-no">Metric 01</span><span class="part-label">Network Degree · Local</span>
         <h2>연결 정도</h2>
-        <p class="lead">개인이 <span class="hl">직접 연결된 사람의 수</span>를 세는 가장 기본적인 지표입니다.</p>
-        <p>내가 바로 아는 사람이 몇 명인지를 측정합니다. 값이 10이면 나는 10명과 직접 연결되어 있습니다. 단순하지만 "인맥의 양"을 보여주는 직관적인 지표입니다.</p>
-        <div class="formula">degree(v) = 노드 v에 연결된 엣지의 개수</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>바깥 노드를 클릭해 연결 토글</span><span class="viz-readout" id="deg-read">degree = 4</span></div>
-          <div class="canvas-box"><canvas id="cv-degree" data-h="280"></canvas></div>
-          <div class="viz-hint">바깥 노드를 클릭하면 중심 노드(나)와의 연결이 추가/제거됩니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>바깥 노드를 클릭해 연결 토글</span><span class="viz-readout" id="deg-read">degree = 4</span></div>
+            <div class="canvas-box"><canvas id="cv-degree" data-h="360"></canvas></div>
+            <div class="viz-hint">바깥 노드를 클릭하면 중심 노드(나)와의 연결이 추가/제거됩니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">개인이 <span class="hl">직접 연결된 사람의 수</span>를 세는 가장 기본적인 지표입니다.</p>
+            <p>내가 바로 아는 사람이 몇 명인지를 측정합니다. 값이 10이면 나는 10명과 직접 연결되어 있습니다. 단순하지만 "인맥의 양"을 보여주는 직관적인 지표입니다.</p>
+            <div class="formula">degree(v) = 노드 v에 연결된 엣지의 개수</div>
+          </div>
         </div>
       </section>
 
       <hr class="rule">
 
       <!-- ===== 02 매개 중심성 ===== -->
-      <section id="m-between" class="reveal">
+      <section id="m-between" class="subsec slide reveal">
         <span class="part-no">Metric 02</span><span class="part-label">Betweenness · Bridge</span>
         <h2>매개 중심성</h2>
-        <p class="lead">서로 모르는 두 사람을 연결하는 <span class="hl">'다리(bridge)' 역할</span>의 정도입니다.</p>
-        <p>전체 네트워크에서 임의의 두 사람을 잇는 최단 경로 중, 나를 거쳐 가는 비율을 모두 합한 값입니다. 값이 높을수록 정보·자원이 흐르는 핵심 통로이며, 내가 빠지면 단절되는 관계가 많아집니다. 조직의 '브로커' 또는 '게이트키퍼'입니다. <b>전역(global) 지표</b>로, 네트워크 전체를 알아야 계산됩니다.</p>
-        <div class="formula">betweenness(v) = Σ (v를 지나는 최단경로 / 전체 최단경로)</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>노드를 클릭하면 매개 중심성 값 표시</span><span class="viz-readout" id="bet-read">노드를 선택하세요</span></div>
-          <div class="canvas-box"><canvas id="cv-between" data-h="320"></canvas></div>
-          <div class="viz-hint">노드를 클릭하면 그 사람이 지나는 최단 경로들이 강조되고, 매개 중심성 값이 표시됩니다. 두 그룹을 잇는 다리 노드의 값이 가장 큽니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>노드를 클릭하면 매개 중심성 값 표시</span><span class="viz-readout" id="bet-read">노드를 선택하세요</span></div>
+            <div class="canvas-box"><canvas id="cv-between" data-h="380"></canvas></div>
+            <div class="viz-hint">노드를 클릭하면 그 사람이 지나는 최단 경로들이 강조되고, 매개 중심성 값이 표시됩니다. 두 그룹을 잇는 다리 노드의 값이 가장 큽니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">서로 모르는 두 사람을 연결하는 <span class="hl">'다리(bridge)' 역할</span>의 정도입니다.</p>
+            <p>전체 네트워크에서 임의의 두 사람을 잇는 최단 경로 중, 나를 거쳐 가는 비율을 모두 합한 값입니다. 값이 높을수록 정보·자원이 흐르는 핵심 통로이며, 내가 빠지면 단절되는 관계가 많아집니다. 조직의 '브로커' 또는 '게이트키퍼'입니다. <b>전역(global) 지표</b>로, 네트워크 전체를 알아야 계산됩니다.</p>
+            <div class="formula">betweenness(v) = Σ (v를 지나는 최단경로 / 전체 최단경로)</div>
+          </div>
         </div>
-        <div class="callout gold"><b>조직 예시</b> — 두 부서를 잇는 유일한 연결점인 직원이 퇴사하면, 두 부서 간 정보 교류가 완전히 끊길 수 있습니다. 이 직원의 매개 중심성이 가장 높습니다.</div>
       </section>
 
       <hr class="rule">
 
       <!-- ===== 03 근접 중심성 ===== -->
-      <section id="m-closeness" class="reveal">
+      <section id="m-closeness" class="subsec slide reveal">
         <span class="part-no">Metric 03</span><span class="part-label">Closeness · Reach Speed</span>
         <h2>근접 중심성</h2>
-        <p class="lead">네트워크 내 <span class="hl">모든 사람에게 얼마나 빨리 도달</span>할 수 있는지를 나타냅니다.</p>
-        <p>정보를 전달할 때 그룹 내 모든 사람에게 전파되는 속도입니다. 다른 모든 노드까지의 최단 경로 거리 합이 작을수록 근접 중심성이 높습니다.</p>
-        <div class="formula">closeness(v) = (N−1) / Σ 최단거리(v, 모든 노드)</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>노드를 클릭해 전파 단계 확인</span><span class="viz-readout" id="clo-read">노드를 선택하세요</span></div>
-          <div class="canvas-box"><canvas id="cv-closeness" data-h="280"></canvas></div>
-          <div class="viz-hint">색이 진할수록 가깝고(1단계), 옅을수록 멀리(2~3단계) 떨어져 있습니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>노드를 클릭해 전파 단계 확인</span><span class="viz-readout" id="clo-read">노드를 선택하세요</span></div>
+            <div class="canvas-box"><canvas id="cv-closeness" data-h="360"></canvas></div>
+            <div class="viz-hint">색이 진할수록 가깝고(1단계), 옅을수록 멀리(2~3단계) 떨어져 있습니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">네트워크 내 <span class="hl">모든 사람에게 얼마나 빨리 도달</span>할 수 있는지를 나타냅니다.</p>
+            <p>정보를 전달할 때 그룹 내 모든 사람에게 전파되는 속도입니다. 다른 모든 노드까지의 최단 경로 거리 합이 작을수록 근접 중심성이 높습니다.</p>
+            <div class="formula">closeness(v) = (N−1) / Σ 최단거리(v, 모든 노드)</div>
+          </div>
         </div>
       </section>
 
       <hr class="rule">
 
       <!-- ===== 04 클러스터링 계수 ===== -->
-      <section id="m-cluster" class="reveal">
+      <section id="m-cluster" class="subsec slide reveal">
         <span class="part-no">Metric 04</span><span class="part-label">Clustering · Closure</span>
         <h2>클러스터링 계수</h2>
-        <p class="lead">내 지인들끼리 <span class="hl">서로 얼마나 잘 아는지</span>를 나타내는 값(0~1)입니다.</p>
-        <p>나(녹색 노드)는 옆에 두고, 나와 연결된 이웃들끼리의 연결만 봅니다. 이웃이 4명이면 이웃 간 가능한 연결은 6쌍입니다. 이 중 실제로 몇 쌍이 연결되어 있는지가 계수입니다. 모두 연결되면 c=1, 절반이면 c=0.5, 하나도 없으면 c=0. 값이 높을수록 촘촘한 소집단(클리크)이라 신뢰가 높지만 외부 정보 유입은 제한됩니다.</p>
-        <div class="formula">CC = 이웃들 간 실제 연결 수 / 가능한 모든 연결 수 [n(n−1)/2]</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>이웃들 사이 점선을 클릭해 연결/해제</span><span class="viz-readout" id="clu-read">CC = 0.33</span></div>
-          <div class="canvas-box"><canvas id="cv-cluster" data-h="300"></canvas></div>
-          <div class="viz-hint">왼쪽 녹색 노드가 '나'입니다. 오른쪽 이웃 4명 사이의 점선을 클릭해 연결해 보세요. 이웃끼리 많이 연결될수록 계수가 1에 가까워집니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>이웃들 사이 점선을 클릭해 연결/해제</span><span class="viz-readout" id="clu-read">CC = 0.33</span></div>
+            <div class="canvas-box"><canvas id="cv-cluster" data-h="360"></canvas></div>
+            <div class="viz-hint">왼쪽 녹색 노드가 '나'입니다. 오른쪽 이웃 4명 사이의 점선을 클릭해 연결해 보세요. 이웃끼리 많이 연결될수록 계수가 1에 가까워집니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">내 지인들끼리 <span class="hl">서로 얼마나 잘 아는지</span>를 나타내는 값(0~1)입니다.</p>
+            <p>나(녹색 노드)는 옆에 두고, 나와 연결된 이웃들끼리의 연결만 봅니다. 이웃이 4명이면 이웃 간 가능한 연결은 6쌍입니다. 이 중 실제로 몇 쌍이 연결되어 있는지가 계수입니다. 모두 연결되면 c=1, 절반이면 c=0.5, 하나도 없으면 c=0. 값이 높을수록 촘촘한 소집단(클리크)이라 신뢰가 높지만 외부 정보 유입은 제한됩니다.</p>
+            <div class="formula">CC = 이웃들 간 실제 연결 수 / 가능한 모든 연결 수 [n(n−1)/2]</div>
+          </div>
         </div>
       </section>
 
       <hr class="rule">
 
       <!-- ===== 05 네트워크 밀도 ===== -->
-      <section id="m-density" class="reveal">
+      <section id="m-density" class="subsec slide reveal">
         <span class="part-no">Metric 05</span><span class="part-label">Density · Team-level</span>
         <h2>네트워크 밀도</h2>
-        <p class="lead">전체 네트워크가 <span class="hl">얼마나 촘촘하게 연결</span>되어 있는지를 0~1로 표현합니다.</p>
-        <p>가능한 모든 연결 중 실제로 연결된 비율입니다. 밀도가 높으면 신뢰·협력이 강하지만 새 정보가 적고, 낮으면 다양한 정보에 접근하기 좋지만 응집력이 약합니다.</p>
-        <div class="formula">density = 실제 엣지 수 / [N(N−1)/2]</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>슬라이더로 밀도 조절</span><span class="viz-readout" id="den-read">density = 0.30</span></div>
-          <div class="canvas-box"><canvas id="cv-density" data-h="300"></canvas></div>
-          <div class="viz-ctrl"><span>희소</span><input type="range" id="den-slider" min="0" max="100" value="30" oninput="drawDensity(+this.value)"><span>촘촘</span></div>
-          <div class="viz-hint">슬라이더를 오른쪽으로 옮길수록 더 많은 연결이 추가됩니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>슬라이더로 밀도 조절</span><span class="viz-readout" id="den-read">density = 0.30</span></div>
+            <div class="canvas-box"><canvas id="cv-density" data-h="360"></canvas></div>
+            <div class="viz-ctrl"><span>희소</span><input type="range" id="den-slider" min="0" max="100" value="30" oninput="drawDensity(+this.value)"><span>촘촘</span></div>
+            <div class="viz-hint">슬라이더를 오른쪽으로 옮길수록 더 많은 연결이 추가됩니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">전체 네트워크가 <span class="hl">얼마나 촘촘하게 연결</span>되어 있는지를 0~1로 표현합니다.</p>
+            <p>가능한 모든 연결 중 실제로 연결된 비율입니다. 밀도가 높으면 신뢰·협력이 강하지만 새 정보가 적고, 낮으면 다양한 정보에 접근하기 좋지만 응집력이 약합니다.</p>
+            <div class="formula">density = 실제 엣지 수 / [N(N−1)/2]</div>
+          </div>
         </div>
       </section>
 
       <hr class="rule">
 
       <!-- ===== 06 구조적 공백 ===== -->
-      <section id="m-hole" class="reveal">
+      <section id="m-hole" class="subsec slide reveal">
         <span class="part-no">Metric 06</span><span class="part-label">Structural Hole · Burt 1992</span>
         <h2>구조적 공백</h2>
-        <p class="lead">내 이웃들이 <span class="hl">서로 얼마나 안 겹치는지</span>를 봅니다. 서로 모르는 이웃들 사이의 '빈틈(공백)'을 메우는 사람이 정보·기회·통제력의 이점을 얻습니다.</p>
-        <p>Burt(1992)는 두 사람 사이에 직접 연결이 없는 빈 자리를 <b>구조적 공백</b>이라 불렀습니다. 내 이웃 A와 B가 서로 모른다면, 나는 A·B 사이의 공백을 잇는 유일한 다리이고 양쪽의 서로 다른 정보를 독점적으로 받습니다. 반대로 A·B가 서로 알면 그들의 정보는 <b>중복(redundant)</b>되고, 나를 거치지 않아도 연결되므로 내 중개 가치는 사라집니다.</p>
-        <div class="callout">대표 측정값은 두 가지입니다. <b>① 유효 규모(Effective size)</b> = n − 2t/n — 내 이웃 n명 중 '중복을 걷어낸 실질 인맥 수'. 이웃끼리 연결(t)이 많을수록 작아집니다. <b>② 효율성(Efficiency)</b> = 유효 규모 / n — 인맥 1명당 평균 이점. 1에 가까울수록 군더더기 없이 모두 비중복 정보원입니다.</div>
-        <div class="formula">유효 규모 = n − 2t/n  ·  효율성 = (n − 2t/n) / n<br>n = 이웃 수, t = 이웃들 사이의 실제 연결 수</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>이웃들 사이 선을 클릭해 연결을 추가/제거</span><span class="viz-readout" id="hole-read">효율성 = 1.00</span></div>
-          <div class="canvas-box"><canvas id="cv-hole" data-h="300"></canvas></div>
-          <div class="viz-hint">왼쪽 노드가 '나'입니다. 이웃 4명이 서로 모르면(연결 0개) 효율성 1.0 — 4명 모두 독립된 정보원. 이웃끼리 연결할수록 정보가 중복되어 유효 규모·효율성이 함께 떨어집니다. 빨간 점선이 아직 비어 있는 '구조적 공백'입니다.</div>
+        <div class="msplit">
+          <div class="viz-card">
+            <div class="viz-label"><span>서로 다른 그룹(골드)을 잇는 빨간 선을 클릭해 연결/해제</span><span class="viz-readout" id="con-read">제약 = 낮음</span></div>
+            <div class="canvas-box"><canvas id="cv-constraint" data-h="400"></canvas></div>
+            <div class="viz-hint">녹색 '나'는 서로 분리된 4개 그룹에 연결되어 <b>구조적 공백을 가로지르는</b> 위치입니다(제약 최저). 두 그룹을 잇는 점선을 클릭해 연결하면 — 그 두 그룹이 더 이상 독립된 정보원이 아니게 되어(공백이 메워짐) <b>나의 제약이 올라가고 유효 규모가 줄어듭니다</b>. 모든 그룹이 서로 연결되면 나는 더 이상 중개자가 아닙니다. 클릭하는 빨간 선이 바로 '메워진 공백'입니다.</div>
+          </div>
+          <div class="mtext">
+            <p class="lead">내 이웃들이 <span class="hl">서로 얼마나 안 겹치는지</span>를 봅니다. 서로 모르는 이웃들 사이의 '빈틈(공백)'을 메우는 사람이 정보·기회·통제력의 이점을 얻습니다.</p>
+            <p>Burt(1992)는 구조적 공백을 누리지 <b>못하는</b> 정도를 <b>제약(constraint)</b>으로 측정했습니다. 내 인맥들이 자기들끼리 똘똘 뭉쳐 있을수록(클리크) 나는 그 집단에 '갇혀' 새로운 정보·기회로 빠져나가기 어렵습니다 — 제약이 높습니다. 반대로 서로 모르는 여러 집단에 두루 걸쳐 있으면 제약이 낮고, 그만큼 자유롭게 중개·교섭할 수 있습니다.</p>
+            <div class="callout">이웃들이 서로 <b>겹치지 않을수록</b> 이점이 큽니다. <b>유효 규모(Effective size)</b> = 중복을 걷어낸 실질 인맥 수(클수록 좋음) · <b>효율성(Efficiency)</b> = 인맥 1명당 이점(1에 가까울수록 좋음) · <b>제약(Constraint)</b> = 공백을 못 누리는 정도(낮을수록 좋음).</div>
+            <div class="formula">제약 cᵢ = Σⱼ ( pᵢⱼ + Σ_q pᵢ_q · p_qⱼ )²<br>pᵢⱼ = i가 j에 투자한 관계 비중 · q = i,j 모두와 연결된 제3자</div>
+          </div>
         </div>
 
-        <h3>또 다른 핵심 지표 — 네트워크 제약(Network Constraint)</h3>
-        <p>Burt는 구조적 공백을 누리지 <b>못하는</b> 정도를 <b>제약(constraint)</b>으로 측정했습니다. 내 인맥들이 자기들끼리 똘똘 뭉쳐 있을수록(클리크) 나는 그 집단에 '갇혀' 새로운 정보·기회로 빠져나가기 어렵습니다 — 제약이 높습니다. 반대로 서로 모르는 여러 집단에 두루 걸쳐 있으면 제약이 낮고, 그만큼 자유롭게 중개·교섭할 수 있습니다.</p>
-        <div class="formula">제약 cᵢ = Σⱼ ( pᵢⱼ + Σ_q pᵢ_q · p_qⱼ )²<br>pᵢⱼ = i가 j에 투자한 관계 비중 · q = i,j 모두와 연결된 제3자</div>
-        <div class="viz-card">
-          <div class="viz-label"><span>서로 다른 그룹(골드)을 잇는 빨간 선을 클릭해 연결/해제</span><span class="viz-readout" id="con-read">제약 = 낮음</span></div>
-          <div class="canvas-box"><canvas id="cv-constraint" data-h="380"></canvas></div>
-          <div class="viz-hint">녹색 '나'는 서로 분리된 4개 그룹에 연결되어 <b>구조적 공백을 가로지르는</b> 위치입니다(제약 최저). 두 그룹을 잇는 점선을 클릭해 연결하면 — 그 두 그룹이 더 이상 독립된 정보원이 아니게 되어(공백이 메워짐) <b>나의 제약이 올라가고 유효 규모가 줄어듭니다</b>. 모든 그룹이 서로 연결되면 나는 더 이상 중개자가 아닙니다. 클릭하는 빨간 선이 바로 '메워진 공백'입니다.</div>
-        </div>
-        <div class="callout green"><b>3가지 지표 정리</b> — <b>유효 규모</b> = 중복 걷어낸 실질 인맥 수(클수록 좋음) · <b>효율성</b> = 인맥당 이점(1에 가까울수록 좋음) · <b>제약</b> = 공백을 못 누리는 정도(낮을수록 좋음). 셋 다 "내 이웃들이 서로 얼마나 안 겹치는가"라는 같은 직관을 다른 방식으로 잰 것입니다.</div>
-        <div class="callout gold"><b>매개 중심성과 차이</b> — <b>매개 중심성</b>은 전체 네트워크에서 내가 최단 경로 위에 얼마나 자주 놓이는지(전역·global)를 보고, <b>구조적 공백</b>은 내 직접 이웃들이 서로 얼마나 안 겹치는지(지역·local)만 봅니다. 또 <b>클러스터링 계수와는 정반대</b>입니다: CC가 높으면(이웃끼리 다 앎) 구조적 공백은 사라집니다.</div>
-      </section>
-
-      <hr class="rule">
-
-      <!-- ===== 07 유대 강도 ===== -->
-      <section id="m-tie" class="reveal">
-        <span class="part-no">Metric 07</span><span class="part-label">Tie Strength · Granovetter 1973</span>
-        <h2>유대 강도</h2>
-        <p class="lead">관계의 강도는 <span class="hl">함께한 시간·정서적 강도·친밀감·호혜성</span>의 조합입니다.</p>
-        <p>Granovetter(1973)는 지인 소개로 취업한 사람들을 조사해, 정보의 대부분이 <b>자주 만나지 않는 약한 유대</b>로부터 왔음을 발견했습니다 — "사람들은 존재조차 잊고 있던 이들로부터 중요한 정보를 받는다."</p>
-        <div class="viz-card">
-          <div class="viz-label"><span>취업 정보의 출처 (Granovetter 1973)</span></div>
-          <div class="canvas-box"><canvas id="cv-tie" data-h="220"></canvas></div>
-          <div class="viz-hint">약한 유대(중간 빈도 + 연 1회 이하)가 전체 취업 정보의 약 83%를 차지했습니다.</div>
-        </div>
-        <div class="tie-grid">
-          <div class="tie-col tie-weak"><h4>약한 유대 (Weak Tie)</h4><ul>
-            <li>다른 사회 그룹에 연결 → 새 정보·기회</li>
-            <li>이질적 팀 → 다양한 관점·아이디어</li>
-            <li>명시적·코드화 지식 탐색에 유리</li>
-          </ul></div>
-          <div class="tie-col tie-strong"><h4>강한 유대 (Strong Tie)</h4><ul>
-            <li>높은 신뢰·응집력 → 깊은 협력</li>
-            <li>동질적 팀 → 원활한 지식 공유</li>
-            <li>암묵적·복잡한 지식 전달에 유리</li>
-          </ul></div>
-        </div>
-        <div class="card">
-          <div class="tag">Hansen 1999</div>
-          <p style="margin:0 0 6px">지식의 성격에 따라 효과적인 유대가 다릅니다.</p>
-          <div class="tbl-wrap"><table class="t">
-            <thead><tr><th>지식 유형 \ 유대</th><th>강한 유대</th><th>약한 유대</th></tr></thead>
-            <tbody>
-              <tr><td class="rh">명시적·코드화 지식</td><td>탐색 효과 <span class="no">낮음</span></td><td>탐색 효과 <span class="yes">높음</span></td></tr>
-              <tr><td class="rh">암묵적·의존적 지식</td><td>전달 문제 <span class="yes">적음</span></td><td>전달 문제 <span class="no">심각</span></td></tr>
-            </tbody>
-          </table></div>
-        </div>
       </section>
 
       <hr class="rule">
@@ -468,7 +523,7 @@
       <!-- ════════════════════════════════════════════
            LAB — 나의 네트워크 측정
            ════════════════════════════════════════════ -->
-      <section id="lab" class="reveal">
+      <section id="lab" class="subsec slide reveal">
         <span class="part-no">Lab</span><span class="part-label">My Network</span>
         <h2>나의 네트워크 측정</h2>
         <p class="lead">앞에서 배운 지표를 <span class="hl">내 인맥으로 직접 계산</span>해 봅니다. 세 단계로 진행됩니다.</p>
@@ -481,7 +536,7 @@
 
         <!-- Step 1 -->
         <div id="lab-s1">
-          <h3 style="margin-top:0">Step 01 · 내 네트워크 사람들 적기</h3>
+          <h3 style="margin-top:0">1단계 · 내 네트워크 사람들 적기</h3>
           <p>아래 세 가지 관점을 모두 떠올린 뒤, 떠오르는 사람들을 <b>한 리스트에 한 번씩만</b> 적으세요. (중복 자동 제거)</p>
 
           <div class="guide-card">
@@ -514,38 +569,36 @@
 
         <!-- Step 2 -->
         <div id="lab-s2" class="hidden">
-          <h3 style="margin-top:0">Step 02–03 · 친밀도 · 동료 특성 표시</h3>
+          <h3 style="margin-top:0">2단계 · 친밀도 · 특성 표시</h3>
           <p>각 사람과 얼마나 가까운지, 다른 팀인지, 나보다 높은 직급인지 표시하세요.</p>
           <div class="attr-table-wrap"><table class="attr-table" id="attr-table"></table></div>
 
-          <h3>Step 04 · 서로 아는 사이 체크</h3>
+          <h3>서로 아는 사이 체크</h3>
           <p>내가 적은 사람들끼리 서로 아는지 표시하세요. 두 가지 방식 중 편한 것을 고르세요.</p>
           <div class="mode-switch">
-            <button class="ms-btn active" id="mode-pair" onclick="setMode('pair')">📋 페어 리스트 (쉬움)</button>
-            <button class="ms-btn" id="mode-cell" onclick="setMode('cell')">▦ 매트릭스 그리드</button>
+            <button class="ms-btn active" id="mode-cell" onclick="setMode('cell')">Matrix Grid</button>
+            <button class="ms-btn" id="mode-pair" onclick="setMode('pair')">Pair List</button>
           </div>
-          <div id="pair-mode">
+          <div id="pair-mode" class="hidden">
             <div class="pair-tip">아래 각 쌍이 <b>서로 아는 사이</b>라면 카드를 클릭하세요. 검색으로 특정 사람을 필터링할 수 있습니다.</div>
             <input class="pair-search" id="pair-search" placeholder="이름으로 필터링…" oninput="filterPairs(this.value)">
             <div class="pair-list" id="pair-list"></div>
           </div>
-          <div id="cell-mode" class="hidden">
+          <div id="cell-mode">
             <div class="pair-tip">셀을 클릭해 체크하세요. 큰 셀이라 클릭이 편합니다.</div>
             <div class="matrix-wrap"><table class="matrix" id="matrix-table"></table></div>
           </div>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="calc()">📊 네트워크 계산하기</button>
+            <button class="btn btn-primary" onclick="calc()">네트워크 계산하기 →</button>
             <button class="btn btn-ghost" onclick="backTo1()">← 이름 다시 입력</button>
           </div>
         </div>
 
         <!-- Step 3 -->
         <div id="lab-s3" class="hidden">
-          <h3 style="margin-top:0">Step 05 · 내 네트워크 분석 결과</h3>
+          <h3 style="margin-top:0">3단계 · 내 네트워크 분석 결과</h3>
           <div class="stats-grid">
             <div class="stat-card"><div class="sl">인원 N</div><div class="sv" id="r-n">—</div><div class="ss">총 명수</div></div>
-            <div class="stat-card"><div class="sl">최대밀도 M</div><div class="sv" id="r-m">—</div><div class="ss">N(N-1)/2</div></div>
-            <div class="stat-card"><div class="sl">연결 C</div><div class="sv" id="r-c">—</div><div class="ss">아는 쌍</div></div>
             <div class="stat-card"><div class="sl">밀도 D</div><div class="sv accent" id="r-d">—</div><div class="ss">C / M</div></div>
             <div class="stat-card"><div class="sl">매우 가까움</div><div class="sv" id="r-vc">—</div><div class="ss">명</div></div>
             <div class="stat-card"><div class="sl">다른 부서</div><div class="sv" id="r-dt">—</div><div class="ss">명</div></div>
@@ -556,8 +609,6 @@
             <p class="note" style="margin:0 0 8px">노드 = 사람 · 선 = 서로 아는 관계 · 색 = 친밀도 · 크기 = 연결 수</p>
             <div class="canvas-box"><canvas id="result-canvas"></canvas></div>
           </div>
-          <div class="insight" id="ins-main"></div>
-          <div class="insight" id="ins-sub"></div>
           <div class="btn-row"><button class="btn btn-ghost" onclick="backTo2()">← 그리드 수정</button></div>
         </div>
       </section>
@@ -566,7 +617,7 @@
 
     </div><!-- /.wrap -->
 
-    <footer>
+    <footer class="slide">
       <div class="copyright">
         <div class="ct">© 저작권 안내</div>
         <p>본 자료는 저작권법에 의해 보호받는 저작물이며, 저작권자의 허가 없이 복제·배포·전송·전시 등의 방법으로 이용할 수 없습니다. <b>(강의: 건국대학교 경영학과 홍운기 교수)</b></p>
@@ -577,6 +628,52 @@
   </div><!-- /#main-content -->
 
   <script>
+    /* ═══════════════ 내용 복사 방지 (수업 자료 · 가벼운 차단) ═══════════════ */
+    ['copy', 'cut', 'contextmenu'].forEach(ev => document.addEventListener(ev, e => e.preventDefault()));
+    document.addEventListener('dragstart', e => { if (!(e.target.closest && e.target.closest('[draggable="true"]'))) e.preventDefault(); });
+
+    /* ═══════════════ PPT 넘김 — 카운터 · 화살표 · 프레젠터/키보드 즉시 전환 ═══════════════ */
+    const slides = [...document.querySelectorAll('.slide')];
+    const counter = document.getElementById('slide-counter');
+    function curSlide() { const y = scrollY + 140; let i = 0; slides.forEach((s, k) => { if (s.getBoundingClientRect().top + scrollY <= y) i = k; }); return i; }
+    function updCounter() { if (counter) counter.textContent = (curSlide() + 1) + ' / ' + slides.length; }
+    /* PPT처럼 '딱' 즉시 전환(스크롤 애니메이션 없음) + 도착 슬라이드 페이드인 */
+    function jumpToSlide(n) {
+      n = Math.max(0, Math.min(slides.length - 1, n));
+      const s = slides[n]; if (!s) return;
+      s.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (s.classList.contains('reveal')) s.classList.add('in');
+      s.classList.remove('ppt-arrive'); void s.offsetWidth; s.classList.add('ppt-arrive');
+      updCounter();
+    }
+    function goSlide(d) { jumpToSlide(curSlide() + d); }
+    /* 긴 슬라이드는 그 안에서 한 화면씩 즉시 넘긴 뒤 다음 슬라이드로. 휠 스크롤은 자유. */
+    function pptStep(dir) {
+      const vh = innerHeight, s = slides[curSlide()];
+      if (!s) return goSlide(dir);
+      const r = s.getBoundingClientRect();
+      if (dir > 0 && r.bottom > vh + 24) { scrollBy({ top: Math.round(vh * 0.9), behavior: 'instant' }); updCounter(); }
+      else if (dir < 0 && r.top < -24) { scrollBy({ top: -Math.round(vh * 0.9), behavior: 'instant' }); updCounter(); }
+      else goSlide(dir);
+    }
+    addEventListener('keydown', e => {
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+      const t = e.target, k = e.key;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;  // 입력 중엔 패스
+      const next = (k === 'PageDown' || k === 'ArrowRight' || (k === ' ' && !e.shiftKey));
+      const prev = (k === 'PageUp' || k === 'ArrowLeft' || (k === ' ' && e.shiftKey));
+      if (!next && !prev) return;
+      if (k === ' ' && t && t.closest && t.closest('button, a, [role="button"], [onclick]')) return;  // Space는 버튼·링크에 양보
+      e.preventDefault();
+      pptStep(next ? 1 : -1);
+    });
+    addEventListener('scroll', updCounter, { passive: true }); addEventListener('load', updCounter); updCounter();
+    function toggleToc() {
+      document.body.classList.toggle('toc-hidden');
+      const b = document.getElementById('toc-toggle');
+      if (b) b.textContent = document.body.classList.contains('toc-hidden') ? '☰ 목차' : '✕ 목차';
+    }
+
     /* ═══════════════ 진행 막대 + 등장 애니메이션 ═══════════════ */
     const bar = document.getElementById('bar');
     addEventListener('scroll', () => { const h = document.documentElement; bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%'; });
@@ -624,7 +721,7 @@
       c.beginPath(); c.arc(x, y, r + 1, 0, 7); c.fillStyle = '#ffffff'; c.fill(); // 흰 카드 배경으로 선 가림
       c.beginPath(); c.arc(x, y, r, 0, 7); c.fillStyle = fill; c.fill();
       c.lineWidth = 2; c.strokeStyle = stroke; c.stroke();
-      if (label) { c.fillStyle = lc || '#fff'; c.font = '600 13px "Gowun Dodum"'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, x, y); }
+      if (label) { c.fillStyle = lc || '#fff'; c.font = '600 13px "Pretendard"'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, x, y); }
     }
     function edgeLine(c, a, b, col, w, al) { c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.strokeStyle = col; c.lineWidth = w || 1.5; c.globalAlpha = al == null ? .55 : al; c.stroke(); c.globalAlpha = 1; }
     // 값 램프: 골드(낮음) → 건국대 그린(높음)
@@ -877,7 +974,7 @@
       const labelW = Math.min(220, w * 0.34); const x0 = labelW; const bw = w - labelW - 70;
       let y = 24; const bh = 40, gap = 18;
       data.forEach(d => {
-        c.fillStyle = '#585d54'; c.font = '13px "Gowun Dodum"'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(d.l, x0 - 14, y + bh / 2);
+        c.fillStyle = '#585d54'; c.font = '13px "Pretendard"'; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText(d.l, x0 - 14, y + bh / 2);
         c.fillStyle = '#f0e9de'; c.fillRect(x0, y, bw, bh);
         c.fillStyle = d.col; c.globalAlpha = .9; c.fillRect(x0, y, bw * d.v / 100, bh); c.globalAlpha = 1;
         c.fillStyle = '#1b1d19'; c.font = '500 13px "DM Mono"'; c.textAlign = 'left'; c.fillText(d.v + '%', x0 + bw * d.v / 100 + 8, y + bh / 2);
@@ -888,7 +985,7 @@
     /* ── 전체 그리기 / 리사이즈 ── */
     function drawAll() {
       drawDegree(); drawBetween(); drawCloseness(); drawCluster();
-      drawDensity(null); drawHole(); drawTie();
+      drawDensity(null); drawConstraint(); drawTie();
       if (names.length) drawResultGraph();
     }
     addEventListener('load', () => requestAnimationFrame(drawAll));
@@ -907,7 +1004,7 @@
     addInputs(8);
     function updateCount() { const vals = [...document.querySelectorAll('.np-inp')].map(i => i.value.trim()).filter(Boolean); document.getElementById('name-count').textContent = new Set(vals).size + '명'; }
 
-    let names = [], proximity = [], diffTeam = [], higherStatus = [], checks = [], checkMode = 'pair';
+    let names = [], proximity = [], diffTeam = [], higherStatus = [], checks = [], checkMode = 'cell';
     function buildStep2() {
       const seen = new Set(); names = [];
       document.querySelectorAll('.np-inp').forEach(i => { const v = i.value.trim(); if (v && !seen.has(v)) { seen.add(v); names.push(v); } });
@@ -959,19 +1056,8 @@
       for (let i = 0; i < N; i++) for (let j = 0; j < i; j++) if (checks[i][j]) C++;
       const D = M > 0 ? C / M : 0;
       const vc = proximity.filter(p => p === 'VC').length, dt = diffTeam.filter(Boolean).length, hs = higherStatus.filter(Boolean).length;
-      document.getElementById('r-n').textContent = N; document.getElementById('r-m').textContent = M; document.getElementById('r-c').textContent = C;
+      document.getElementById('r-n').textContent = N;
       document.getElementById('r-d').textContent = D.toFixed(2); document.getElementById('r-vc').textContent = vc; document.getElementById('r-dt').textContent = dt; document.getElementById('r-hs').textContent = hs;
-      let ins = '';
-      if (D >= 0.7) ins = `<span class="tg" style="background:var(--green-soft);color:var(--green-deep)">HIGH DENSITY</span> 밀도 <strong>${D.toFixed(2)}</strong> — 구성원들이 서로 잘 아는 <strong>촘촘한 네트워크</strong>입니다. 신뢰·협력이 강하지만 외부 정보 유입이 제한되고 <em>구조적 공백</em>이 적습니다. 약한 유대를 늘려 새 정보 채널을 확보해 보세요.`;
-      else if (D >= 0.4) ins = `<span class="tg" style="background:var(--green-soft);color:var(--green-deep)">BALANCED</span> 밀도 <strong>${D.toFixed(2)}</strong> — 강한 유대와 약한 유대가 적절히 혼재한 <strong>균형 잡힌 네트워크</strong>입니다. 신뢰 기반 협력과 새 정보 획득이 모두 가능한 이상적 구조에 가깝습니다.`;
-      else ins = `<span class="tg" style="background:var(--green-soft);color:var(--green-deep)">LOW DENSITY</span> 밀도 <strong>${D.toFixed(2)}</strong> — <strong>느슨하고 다양한 네트워크</strong>입니다. 서로 다른 그룹에 연결되어 <em>구조적 공백</em>을 메우는 브로커 위치일 가능성이 높아 새 정보·기회에 유리하지만, 깊은 신뢰 관계는 부족할 수 있습니다.`;
-      document.getElementById('ins-main').innerHTML = ins;
-      let sub = '';
-      if (hs > N * 0.3) sub += `<span class="tg" style="background:var(--gold-soft);color:var(--gold-deep)">VERTICAL CAPITAL</span> 높은 직급 연결이 <strong>${hs}명(${Math.round(hs / N * 100)}%)</strong> — <strong>수직적 사회적 자본</strong>이 풍부합니다.<br>`;
-      if (dt > N * 0.4) sub += `<span class="tg" style="background:var(--gold-soft);color:var(--gold-deep)">BRIDGE</span> 다른 부서 연결이 <strong>${dt}명(${Math.round(dt / N * 100)}%)</strong> — <strong>조직 간 브리지</strong> 역할을 합니다. 매개 중심성이 높을 가능성이 큽니다.<br>`;
-      if (vc > 0) sub += `<span class="tg" style="background:var(--green-soft);color:var(--green-deep)">STRONG TIES</span> 매우 가까운 관계 <strong>${vc}명</strong> — 암묵적 지식 전달의 핵심 강한 유대입니다.`;
-      if (!sub) sub = `<span class="tg" style="background:var(--gold-soft);color:var(--gold-deep)">TIP</span> 친밀도·다른 부서·높은 직급을 표시하면 더 상세한 분석이 제공됩니다.`;
-      document.getElementById('ins-sub').innerHTML = sub;
       document.getElementById('lab-s2').classList.add('hidden'); document.getElementById('lab-s3').classList.remove('hidden'); document.getElementById('sp3').classList.add('on');
       document.getElementById('lab').scrollIntoView({ behavior: 'smooth' });
       requestAnimationFrame(drawResultGraph);
@@ -986,8 +1072,8 @@
       const colMap = { VC: '#005426', C: '#8b9086', NVC: '#b07f21', D: '#c43d30' };
       pos.forEach((p, i) => {
         const deg = checks[i].filter(Boolean).length; const r = 12 + deg * 2.5; const col = colMap[proximity[i]] || '#8b9086';
-        c.beginPath(); c.arc(p.x, p.y, r, 0, 7); c.fillStyle = col + '28'; c.fill(); c.lineWidth = 2; c.strokeStyle = col; c.stroke();
-        c.fillStyle = '#1b1d19'; c.font = '11px "Gowun Dodum"'; c.textAlign = 'center'; c.textBaseline = 'middle';
+        c.beginPath(); c.arc(p.x, p.y, r, 0, 7); c.fillStyle = '#fbfaf5'; c.fill(); c.fillStyle = col + '28'; c.fill(); c.lineWidth = 2; c.strokeStyle = col; c.stroke();
+        c.fillStyle = '#1b1d19'; c.font = '11px "Pretendard"'; c.textAlign = 'center'; c.textBaseline = 'middle';
         c.fillText(names[i].length > 4 ? names[i].slice(0, 4) : names[i], p.x, p.y);
       });
     }
