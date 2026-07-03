@@ -405,11 +405,11 @@
           <div class="viz-card">
             <div class="viz-label"><span>바깥 노드를 클릭해 연결 토글</span><span class="viz-readout" id="deg-read">degree = 4</span></div>
             <div class="canvas-box"><canvas id="cv-degree" data-h="360"></canvas></div>
-            <div class="viz-hint">바깥 노드를 클릭하면 중심 노드(나)와의 연결이 추가/제거됩니다.</div>
+            <div class="viz-hint">바깥 노드를 클릭하면 중심 노드(나)와의 연결이 추가/제거된다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">개인이 <span class="hl">직접 연결된 사람의 수</span>를 세는 가장 기본적인 지표입니다.</p>
-            <p>내가 바로 아는 사람이 몇 명인지를 측정합니다. 값이 10이면 나는 10명과 직접 연결되어 있습니다. 단순하지만 "인맥의 양"을 보여주는 직관적인 지표입니다.</p>
+            <p class="lead">개인이 <span class="hl">직접 연결된 사람의 수</span>를 세는 가장 기본적인 지표다.</p>
+            <p>내가 바로 아는 사람이 몇 명인지를 측정한다. 값이 10이면 나는 10명과 직접 연결되어 있다. 단순하지만 "인맥의 양"을 보여주는 직관적인 지표다.</p>
             <div class="formula">degree(v) = 노드 v에 연결된 엣지의 개수</div>
           </div>
         </div>
@@ -423,13 +423,13 @@
         <h2>매개 중심성</h2>
         <div class="msplit">
           <div class="viz-card">
-            <div class="viz-label"><span>노드를 클릭하면 매개 중심성 값 표시</span><span class="viz-readout" id="bet-read">노드를 선택하세요</span></div>
+            <div class="viz-label"><span>노드를 클릭하면 매개 중심성 값 표시</span><span class="viz-readout" id="bet-read">노드를 선택하라</span></div>
             <div class="canvas-box"><canvas id="cv-between" data-h="380"></canvas></div>
-            <div class="viz-hint">노드를 클릭하면 그 사람이 지나는 최단 경로들이 강조되고, 매개 중심성 값이 표시됩니다. 두 그룹을 잇는 다리 노드의 값이 가장 큽니다.</div>
+            <div class="viz-hint">노드를 클릭하면 그 사람이 지나는 최단 경로들이 강조되고, 매개 중심성 값이 표시된다. 두 그룹을 잇는 다리 노드의 값이 가장 크다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">서로 모르는 두 사람을 연결하는 <span class="hl">'다리(bridge)' 역할</span>의 정도입니다.</p>
-            <p>전체 네트워크에서 임의의 두 사람을 잇는 최단 경로 중, 나를 거쳐 가는 비율을 모두 합한 값입니다. 값이 높을수록 정보·자원이 흐르는 핵심 통로이며, 내가 빠지면 단절되는 관계가 많아집니다. 조직의 '브로커' 또는 '게이트키퍼'입니다. <b>전역(global) 지표</b>로, 네트워크 전체를 알아야 계산됩니다.</p>
+            <p class="lead">서로 모르는 두 사람을 연결하는 <span class="hl">'다리(bridge)' 역할</span>의 정도다.</p>
+            <p>전체 네트워크에서 임의의 두 사람을 잇는 최단 경로 중, 나를 거쳐 가는 비율을 모두 합한 값이다. 값이 높을수록 정보·자원이 흐르는 핵심 통로이며, 내가 빠지면 단절되는 관계가 많아진다. 조직의 '브로커' 또는 '게이트키퍼'다. <b>전역(global) 지표</b>로, 네트워크 전체를 알아야 계산된다.</p>
             <div class="formula">betweenness(v) = Σ (v를 지나는 최단경로 / 전체 최단경로)</div>
           </div>
         </div>
@@ -443,13 +443,13 @@
         <h2>근접 중심성</h2>
         <div class="msplit">
           <div class="viz-card">
-            <div class="viz-label"><span>노드를 클릭해 전파 단계 확인</span><span class="viz-readout" id="clo-read">노드를 선택하세요</span></div>
+            <div class="viz-label"><span>노드를 클릭해 전파 단계 확인</span><span class="viz-readout" id="clo-read">노드를 선택하라</span></div>
             <div class="canvas-box"><canvas id="cv-closeness" data-h="360"></canvas></div>
-            <div class="viz-hint">색이 진할수록 가깝고(1단계), 옅을수록 멀리(2~3단계) 떨어져 있습니다.</div>
+            <div class="viz-hint">색이 진할수록 가깝고(1단계), 옅을수록 멀리(2~3단계) 떨어져 있다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">네트워크 내 <span class="hl">모든 사람에게 얼마나 빨리 도달</span>할 수 있는지를 나타냅니다.</p>
-            <p>정보를 전달할 때 그룹 내 모든 사람에게 전파되는 속도입니다. 다른 모든 노드까지의 최단 경로 거리 합이 작을수록 근접 중심성이 높습니다.</p>
+            <p class="lead">네트워크 내 <span class="hl">모든 사람에게 얼마나 빨리 도달</span>할 수 있는지를 나타낸다.</p>
+            <p>정보를 전달할 때 그룹 내 모든 사람에게 전파되는 속도다. 다른 모든 노드까지의 최단 경로 거리 합이 작을수록 근접 중심성이 높다.</p>
             <div class="formula">closeness(v) = (N−1) / Σ 최단거리(v, 모든 노드)</div>
           </div>
         </div>
@@ -465,11 +465,11 @@
           <div class="viz-card">
             <div class="viz-label"><span>이웃들 사이 점선을 클릭해 연결/해제</span><span class="viz-readout" id="clu-read">CC = 0.33</span></div>
             <div class="canvas-box"><canvas id="cv-cluster" data-h="360"></canvas></div>
-            <div class="viz-hint">왼쪽 녹색 노드가 '나'입니다. 오른쪽 이웃 4명 사이의 점선을 클릭해 연결해 보세요. 이웃끼리 많이 연결될수록 계수가 1에 가까워집니다.</div>
+            <div class="viz-hint">왼쪽 녹색 노드가 '나'다. 오른쪽 이웃 4명 사이의 점선을 클릭해 연결해 보라. 이웃끼리 많이 연결될수록 계수가 1에 가까워진다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">내 지인들끼리 <span class="hl">서로 얼마나 잘 아는지</span>를 나타내는 값(0~1)입니다.</p>
-            <p>나(녹색 노드)는 옆에 두고, 나와 연결된 이웃들끼리의 연결만 봅니다. 이웃이 4명이면 이웃 간 가능한 연결은 6쌍입니다. 이 중 실제로 몇 쌍이 연결되어 있는지가 계수입니다. 모두 연결되면 c=1, 절반이면 c=0.5, 하나도 없으면 c=0. 값이 높을수록 촘촘한 소집단(클리크)이라 신뢰가 높지만 외부 정보 유입은 제한됩니다.</p>
+            <p class="lead">내 지인들끼리 <span class="hl">서로 얼마나 잘 아는지</span>를 나타내는 값(0~1)이다.</p>
+            <p>나(녹색 노드)는 옆에 두고, 나와 연결된 이웃들끼리의 연결만 본다. 이웃이 4명이면 이웃 간 가능한 연결은 6쌍이다. 이 중 실제로 몇 쌍이 연결되어 있는지가 계수다. 모두 연결되면 c=1, 절반이면 c=0.5, 하나도 없으면 c=0. 값이 높을수록 촘촘한 소집단(클리크)이라 신뢰가 높지만 외부 정보 유입은 제한된다.</p>
             <div class="formula">CC = 이웃들 간 실제 연결 수 / 가능한 모든 연결 수 [n(n−1)/2]</div>
           </div>
         </div>
@@ -486,11 +486,11 @@
             <div class="viz-label"><span>슬라이더로 밀도 조절</span><span class="viz-readout" id="den-read">density = 0.30</span></div>
             <div class="canvas-box"><canvas id="cv-density" data-h="360"></canvas></div>
             <div class="viz-ctrl"><span>희소</span><input type="range" id="den-slider" min="0" max="100" value="30" oninput="drawDensity(+this.value)"><span>촘촘</span></div>
-            <div class="viz-hint">슬라이더를 오른쪽으로 옮길수록 더 많은 연결이 추가됩니다.</div>
+            <div class="viz-hint">슬라이더를 오른쪽으로 옮길수록 더 많은 연결이 추가된다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">전체 네트워크가 <span class="hl">얼마나 촘촘하게 연결</span>되어 있는지를 0~1로 표현합니다.</p>
-            <p>가능한 모든 연결 중 실제로 연결된 비율입니다. 밀도가 높으면 신뢰·협력이 강하지만 새 정보가 적고, 낮으면 다양한 정보에 접근하기 좋지만 응집력이 약합니다.</p>
+            <p class="lead">전체 네트워크가 <span class="hl">얼마나 촘촘하게 연결</span>되어 있는지를 0~1로 표현한다.</p>
+            <p>가능한 모든 연결 중 실제로 연결된 비율이다. 밀도가 높으면 신뢰·협력이 강하지만 새 정보가 적고, 낮으면 다양한 정보에 접근하기 좋지만 응집력이 약하다.</p>
             <div class="formula">density = 실제 엣지 수 / [N(N−1)/2]</div>
           </div>
         </div>
@@ -506,12 +506,12 @@
           <div class="viz-card">
             <div class="viz-label"><span>서로 다른 그룹(골드)을 잇는 빨간 선을 클릭해 연결/해제</span><span class="viz-readout" id="con-read">제약 = 낮음</span></div>
             <div class="canvas-box"><canvas id="cv-constraint" data-h="400"></canvas></div>
-            <div class="viz-hint">녹색 '나'는 서로 분리된 4개 그룹에 연결되어 <b>구조적 공백을 가로지르는</b> 위치입니다(제약 최저). 두 그룹을 잇는 점선을 클릭해 연결하면 — 그 두 그룹이 더 이상 독립된 정보원이 아니게 되어(공백이 메워짐) <b>나의 제약이 올라가고 유효 규모가 줄어듭니다</b>. 모든 그룹이 서로 연결되면 나는 더 이상 중개자가 아닙니다. 클릭하는 빨간 선이 바로 '메워진 공백'입니다.</div>
+            <div class="viz-hint">녹색 '나'는 서로 분리된 4개 그룹에 연결되어 <b>구조적 공백을 가로지르는</b> 위치다(제약 최저). 두 그룹을 잇는 점선을 클릭해 연결하면 — 그 두 그룹이 더 이상 독립된 정보원이 아니게 되어(공백이 메워짐) <b>나의 제약이 올라가고 유효 규모가 줄어든다</b>. 모든 그룹이 서로 연결되면 나는 더 이상 중개자가 아니다. 클릭하는 빨간 선이 바로 '메워진 공백'이다.</div>
           </div>
           <div class="mtext">
-            <p class="lead">내 이웃들이 <span class="hl">서로 얼마나 안 겹치는지</span>를 봅니다. 서로 모르는 이웃들 사이의 '빈틈(공백)'을 메우는 사람이 정보·기회·통제력의 이점을 얻습니다.</p>
-            <p>Burt(1992)는 구조적 공백을 누리지 <b>못하는</b> 정도를 <b>제약(constraint)</b>으로 측정했습니다. 내 인맥들이 자기들끼리 똘똘 뭉쳐 있을수록(클리크) 나는 그 집단에 '갇혀' 새로운 정보·기회로 빠져나가기 어렵습니다 — 제약이 높습니다. 반대로 서로 모르는 여러 집단에 두루 걸쳐 있으면 제약이 낮고, 그만큼 자유롭게 중개·교섭할 수 있습니다.</p>
-            <div class="callout">이웃들이 서로 <b>겹치지 않을수록</b> 이점이 큽니다. <b>유효 규모(Effective size)</b> = 중복을 걷어낸 실질 인맥 수(클수록 좋음) · <b>효율성(Efficiency)</b> = 인맥 1명당 이점(1에 가까울수록 좋음) · <b>제약(Constraint)</b> = 공백을 못 누리는 정도(낮을수록 좋음).</div>
+            <p class="lead">내 이웃들이 <span class="hl">서로 얼마나 안 겹치는지</span>를 본다. 서로 모르는 이웃들 사이의 '빈틈(공백)'을 메우는 사람이 정보·기회·통제력의 이점을 얻는다.</p>
+            <p>Burt(1992)는 구조적 공백을 누리지 <b>못하는</b> 정도를 <b>제약(constraint)</b>으로 측정했다. 내 인맥들이 자기들끼리 똘똘 뭉쳐 있을수록(클리크) 나는 그 집단에 '갇혀' 새로운 정보·기회로 빠져나가기 어렵다 — 제약이 높다. 반대로 서로 모르는 여러 집단에 두루 걸쳐 있으면 제약이 낮고, 그만큼 자유롭게 중개·교섭할 수 있다.</p>
+            <div class="callout">이웃들이 서로 <b>겹치지 않을수록</b> 이점이 크다. <b>유효 규모(Effective size)</b> = 중복을 걷어낸 실질 인맥 수(클수록 좋음) · <b>효율성(Efficiency)</b> = 인맥 1명당 이점(1에 가까울수록 좋음) · <b>제약(Constraint)</b> = 공백을 못 누리는 정도(낮을수록 좋음).</div>
             <div class="formula">제약 cᵢ = Σⱼ ( pᵢⱼ + Σ_q pᵢ_q · p_qⱼ )²<br>pᵢⱼ = i가 j에 투자한 관계 비중 · q = i,j 모두와 연결된 제3자</div>
           </div>
         </div>
@@ -526,7 +526,7 @@
       <section id="lab" class="subsec slide reveal">
         <span class="part-no">Lab</span><span class="part-label">My Network</span>
         <h2>나의 네트워크 측정</h2>
-        <p class="lead">앞에서 배운 지표를 <span class="hl">내 인맥으로 직접 계산</span>해 봅니다. 세 단계로 진행됩니다.</p>
+        <p class="lead">앞에서 배운 지표를 <span class="hl">내 인맥으로 직접 계산</span>해 본다. 세 단계로 진행된다.</p>
 
         <div class="step-prog" style="margin-top:24px">
           <div class="sp-item on" id="sp1"></div>
@@ -537,7 +537,7 @@
         <!-- Step 1 -->
         <div id="lab-s1">
           <h3 style="margin-top:0">1단계 · 내 네트워크 사람들 적기</h3>
-          <p>아래 세 가지 관점을 모두 떠올린 뒤, 떠오르는 사람들을 <b>한 리스트에 한 번씩만</b> 적으세요. (중복 자동 제거)</p>
+          <p>아래 세 가지 관점을 모두 떠올린 뒤, 떠오르는 사람들을 <b>한 리스트에 한 번씩만</b> 적는다. (중복 자동 제거)</p>
 
           <div class="guide-card">
             <span class="gc-icon gold">💼</span>
@@ -559,7 +559,7 @@
             </div>
             <div class="name-pool" id="name-pool"></div>
             <button class="add-more" onclick="addInputs(4)">＋ 입력 칸 추가</button>
-            <div class="privacy-note">🔒 입력한 이름은 이 브라우저 안에서만 계산에 쓰이며, 어디에도 저장·전송되지 않습니다.</div>
+            <div class="privacy-note">🔒 입력한 이름은 이 브라우저 안에서만 계산에 쓰이며, 어디에도 저장·전송되지 않는다.</div>
           </div>
 
           <div class="btn-row">
@@ -570,22 +570,22 @@
         <!-- Step 2 -->
         <div id="lab-s2" class="hidden">
           <h3 style="margin-top:0">2단계 · 친밀도 · 특성 표시</h3>
-          <p>각 사람과 얼마나 가까운지, 다른 팀인지, 나보다 높은 직급인지 표시하세요.</p>
+          <p>각 사람과 얼마나 가까운지, 다른 팀인지, 나보다 높은 직급인지 표시한다.</p>
           <div class="attr-table-wrap"><table class="attr-table" id="attr-table"></table></div>
 
           <h3>서로 아는 사이 체크</h3>
-          <p>내가 적은 사람들끼리 서로 아는지 표시하세요. 두 가지 방식 중 편한 것을 고르세요.</p>
+          <p>내가 적은 사람들끼리 서로 아는지 표시한다. 두 가지 방식 중 편한 것을 고른다.</p>
           <div class="mode-switch">
             <button class="ms-btn active" id="mode-cell" onclick="setMode('cell')">Matrix Grid</button>
             <button class="ms-btn" id="mode-pair" onclick="setMode('pair')">Pair List</button>
           </div>
           <div id="pair-mode" class="hidden">
-            <div class="pair-tip">아래 각 쌍이 <b>서로 아는 사이</b>라면 카드를 클릭하세요. 검색으로 특정 사람을 필터링할 수 있습니다.</div>
+            <div class="pair-tip">아래 각 쌍이 <b>서로 아는 사이</b>라면 카드를 클릭한다. 검색으로 특정 사람을 필터링할 수 있다.</div>
             <input class="pair-search" id="pair-search" placeholder="이름으로 필터링…" oninput="filterPairs(this.value)">
             <div class="pair-list" id="pair-list"></div>
           </div>
           <div id="cell-mode">
-            <div class="pair-tip">셀을 클릭해 체크하세요. 큰 셀이라 클릭이 편합니다.</div>
+            <div class="pair-tip">셀을 클릭해 체크한다. 큰 셀이라 클릭이 편하다.</div>
             <div class="matrix-wrap"><table class="matrix" id="matrix-table"></table></div>
           </div>
           <div class="btn-row">
@@ -620,7 +620,7 @@
     <footer class="slide">
       <div class="copyright">
         <div class="ct">© 저작권 안내</div>
-        <p>본 자료는 저작권법에 의해 보호받는 저작물이며, 저작권자의 허가 없이 복제·배포·전송·전시 등의 방법으로 이용할 수 없습니다. <b>(강의: 건국대학교 경영학과 홍운기 교수)</b></p>
+        <p>본 자료는 저작권법에 의해 보호받는 저작물이며, 저작권자의 허가 없이 복제·배포·전송·전시 등의 방법으로 이용할 수 없다. <b>(강의: 건국대학교 경영학과 홍운기 교수)</b></p>
       </div>
       <p class="note" style="margin-top:20px">소셜 네트워크 분석 · 인터랙티브 강의안 · 건국대학교 경영학과 홍운기 교수</p>
     </footer>
@@ -1008,7 +1008,7 @@
     function buildStep2() {
       const seen = new Set(); names = [];
       document.querySelectorAll('.np-inp').forEach(i => { const v = i.value.trim(); if (v && !seen.has(v)) { seen.add(v); names.push(v); } });
-      if (names.length < 2) { alert('최소 2명 이상 입력해주세요.'); return; }
+      if (names.length < 2) { alert('최소 2명 이상 입력하라.'); return; }
       if (names.length > 24) names = names.slice(0, 24);
       const N = names.length;
       proximity = new Array(N).fill('C'); diffTeam = new Array(N).fill(false); higherStatus = new Array(N).fill(false);
